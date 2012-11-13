@@ -8,6 +8,7 @@ from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite
 from Products.PloneTestCase.layer import onsetup
 
+from pmr2.app.workspace.tests.base import WorkspaceDocTestCase
 from pmr2.json.tests import base
 
 
@@ -17,6 +18,12 @@ def test_suite():
         ztc.ZopeDocFileSuite(
             'README.rst', package='pmr2.json',
             test_class=ptc.FunctionalTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        ztc.ZopeDocFileSuite(
+            'workspace.rst', package='pmr2.json',
+            test_class=WorkspaceDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 

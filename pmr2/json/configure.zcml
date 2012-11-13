@@ -1,5 +1,22 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="pmr2.json">
+    
+  <include package="pmr2.layer"/>
+
+  <browser:page
+      for="plone.app.content.browser.adding.CMFAdding"
+      name="addWorkspace"
+      class=".workspace.JsonWorkspaceStorageCreateForm"
+      layer=".interfaces.ISimpleJsonForm"
+      permission="cmf.AddPortalContent"
+      />
+
+  <utility
+      name="application/vnd.physiome.pmr2.json.0"
+      factory=".layer.SimpleJsonFormLayerApplier"
+      provides="pmr2.layer.interfaces.ILayerApplier"
+      />
 
 </configure>
