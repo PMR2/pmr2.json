@@ -6,7 +6,7 @@
   <include package="pmr2.layer"/>
 
   <browser:page
-      for="plone.app.content.browser.adding.CMFAdding"
+      for="pmr2.app.workspace.browser.adding.WorkspaceContainerAdding"
       name="addWorkspace"
       class=".workspace.JsonWorkspaceStorageCreateForm"
       layer=".interfaces.ISimpleJsonForm"
