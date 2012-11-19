@@ -25,6 +25,16 @@
       permission="cmf.AddPortalContent"
       />
 
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="workspace_view"
+      class=".workspace.JsonWorkspacePage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <!-- The layer applier -->
+
   <utility
       name="application/vnd.physiome.pmr2.json.0"
       factory=".layer.SimpleJsonLayerApplier"

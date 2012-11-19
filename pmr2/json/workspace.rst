@@ -70,6 +70,11 @@ can be created like this.
     ...     ' "description": "Test Dummy"}, "actions":{"add":1}}')
     >>> print tb.url
     http://nohost/plone/w/test_user_1_/test
+    >>> result = json.loads(tb.contents)
+    >>> result['id']
+    u'test'
+    >>> result['description']
+    u'Test Dummy'
 
 Success - the redirection to the created object is done here.  Currently
 there is no JSON view for the main workspace page, but once that is done
