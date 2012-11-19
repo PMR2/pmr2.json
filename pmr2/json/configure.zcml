@@ -5,17 +5,29 @@
     
   <include package="pmr2.layer"/>
 
+  <!-- Dashboard -->
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="pmr2-dashboard"
+      class=".dashboard.Dashboard"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <!-- Workspace -->
+
   <browser:page
       for="pmr2.app.workspace.browser.adding.WorkspaceContainerAdding"
       name="addWorkspace"
       class=".workspace.JsonWorkspaceStorageCreateForm"
-      layer=".interfaces.ISimpleJsonForm"
+      layer=".interfaces.ISimpleJsonLayer"
       permission="cmf.AddPortalContent"
       />
 
   <utility
       name="application/vnd.physiome.pmr2.json.0"
-      factory=".layer.SimpleJsonFormLayerApplier"
+      factory=".layer.SimpleJsonLayerApplier"
       provides="pmr2.layer.interfaces.ILayerApplier"
       />
 

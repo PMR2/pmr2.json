@@ -3,7 +3,20 @@ import json
 import zope.interface
 from z3c.form.form import BaseForm
 
-from pmr2.json.interfaces import ISimpleJsonForm
+from pmr2.z3cform.page import SimplePage
+from pmr2.json.interfaces import ISimpleJsonLayer
+
+
+class JsonPage(SimplePage):
+    """
+    Ensure that the custom mimetype is sent.
+    """
+
+    json_mimetype = 'application/vnd.physiome.pmr2.json.0'
+
+    def __call__(self):
+        self.request.response.setHeader('Content-Type', self.json_mimetype)
+        return super(JsonPage, self).__call__()
 
 
 class SimpleJsonFormMixin(BaseForm):
@@ -13,7 +26,7 @@ class SimpleJsonFormMixin(BaseForm):
     This is the simple version.
     """
 
-    zope.interface.implements(ISimpleJsonForm)
+    zope.interface.implements(ISimpleJsonLayer)
 
     prefix = 'json.'
     json_mimetype = 'application/vnd.physiome.pmr2.json.0'

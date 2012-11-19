@@ -66,8 +66,8 @@ can be created like this.
 ::
 
     >>> tb.open(portal_url + '/w/test_user_1_/+/addWorkspace', data=
-    ...     '{"fields":{"id":"test","storage":"dummy_storage"}, '
-    ...     ' "actions":{"add":1}}')
+    ...     '{"fields":{"id":"test", "storage":"dummy_storage", '
+    ...     ' "description": "Test Dummy"}, "actions":{"add":1}}')
     >>> print tb.url
     http://nohost/plone/w/test_user_1_/test
 
