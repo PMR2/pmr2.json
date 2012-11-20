@@ -70,13 +70,14 @@ can be created like this.
     ...     ' "description": "Test Dummy"}, "actions":{"add":1}}')
     >>> print tb.url
     http://nohost/plone/w/test_user_1_/test
+
+Success - the redirection to the created object is done here.  Like the
+standard html based forms, after successful creation the client will be
+redirected to the created resource.  Check that the resource loads.
+::
+
     >>> result = json.loads(tb.contents)
     >>> result['id']
     u'test'
     >>> result['description']
     u'Test Dummy'
-
-Success - the redirection to the created object is done here.  Currently
-there is no JSON view for the main workspace page, but once that is done
-(or rather, ported over from the poorly named pmr2.rest.workspace),
-further tests can be shown.
