@@ -26,6 +26,14 @@
       />
 
   <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspaceContainer"
+      name="folder_listing"
+      class=".workspace.JsonWorkspaceContainerList"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="workspace_view"
       class=".workspace.JsonWorkspacePage"
