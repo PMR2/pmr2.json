@@ -41,6 +41,16 @@
       permission="zope2.View"
       />
 
+  <!-- atct topic -->
+
+  <browser:page
+      for="Products.ATContentTypes.interfaces.IATTopic"
+      name="atct_topic_view"
+      class=".topic.ATCTTopicJsonPage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
   <!-- The layer applier -->
 
   <utility
