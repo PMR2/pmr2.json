@@ -3,6 +3,8 @@ import json
 import zope.interface
 from z3c.form.form import BaseForm
 
+from Products.CMFCore.utils import getToolByName
+
 from pmr2.z3cform.page import SimplePage
 from pmr2.json.interfaces import ISimpleJsonLayer
 
@@ -17,6 +19,27 @@ class JsonPage(SimplePage):
     def __call__(self):
         self.request.response.setHeader('Content-Type', self.json_mimetype)
         return super(JsonPage, self).__call__()
+
+
+class JsonListingBasePage(JsonPage):
+
+    portal_type = None
+
+    def render(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+
+        query = {
+            'portal_type': self.portal_type,
+            'path': [
+                u'/'.join(self.context.getPhysicalPath()),
+            ],
+            'sort_on': 'sortable_title',
+        }
+        results = catalog(**query)
+
+        keys = ['title', 'target']
+        values = [dict(zip(keys, (i.Title, i.getURL(),))) for i in results]
+        return json.dumps(values)
 
 
 class SimpleJsonFormMixin(BaseForm):
