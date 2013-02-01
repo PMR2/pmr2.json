@@ -41,6 +41,26 @@
       permission="zope2.View"
       />
 
+  <!-- Exposure -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureContainer"
+      name="folder_listing"
+      class=".exposure.JsonExposureContainerList"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <!--
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IExposure"
+      name="exposure_view"
+      class=".exposure.JsonExposurePage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+  -->
+
   <!-- atct topic -->
 
   <browser:page
@@ -65,6 +85,21 @@
       name="application/vnd.physiome.pmr2.json.0"
       factory=".layer.SimpleJsonLayerApplier"
       provides="pmr2.layer.interfaces.ILayerApplier"
+      />
+
+  <!-- Widgets -->
+
+  <adapter
+      for="zope.schema.interfaces.IList
+           z3c.form.interfaces.IFormLayer"
+      factory=".widget.JsonDataWidgetFactory"
+      provides="z3c.form.interfaces.IFieldWidget"
+      />
+
+  <adapter 
+      for="zope.schema.interfaces.IList
+           .interfaces.IJsonWidget"
+      factory=".widget.JsonDataConverter" 
       />
 
 </configure>
