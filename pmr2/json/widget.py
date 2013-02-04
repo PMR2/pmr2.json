@@ -9,7 +9,7 @@ from z3c.form.browser.textarea import TextAreaWidget
 from pmr2.json.interfaces import IJsonWidget
 
 
-class JsonDataConverter(BaseDataConverter):
+class JsonListConverter(BaseDataConverter):
     zope.component.adapts(IList, IJsonWidget)
 
     def toWidgetvalue(self, value):

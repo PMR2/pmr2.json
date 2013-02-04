@@ -41,7 +41,7 @@
       permission="zope2.View"
       />
 
-  <!-- Exposure -->
+  <!-- ExposureContainer -->
 
   <browser:page
       for="pmr2.app.exposure.interfaces.IExposureContainer"
@@ -49,6 +49,16 @@
       class=".exposure.JsonExposureContainerList"
       layer=".interfaces.ISimpleJsonLayer"
       permission="zope2.View"
+      />
+
+  <!-- Exposure -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposure"
+      name="wizard"
+      class=".exposure.JsonExposureWizardForm"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="cmf.ModifyPortalContent"
       />
 
   <!--
@@ -99,7 +109,7 @@
   <adapter 
       for="zope.schema.interfaces.IList
            .interfaces.IJsonWidget"
-      factory=".widget.JsonDataConverter" 
+      factory=".widget.JsonListConverter" 
       />
 
 </configure>
