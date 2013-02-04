@@ -10,6 +10,7 @@ from pmr2.z3cform import form
 
 from pmr2.app.exposure.interfaces import IExposureWizard
 from pmr2.app.exposure.browser import util
+from pmr2.app.exposure.browser import wizard
 
 from pmr2.json.mixin import JsonPage, JsonListingBasePage
 from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
@@ -18,43 +19,23 @@ from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
 class JsonExposureWizardForm(SimpleJsonFormMixin, form.EditForm):
 
     fields = field.Fields(IExposureWizard)
-    buttons = form.EditForm.buttons.copy()
-    handlers = form.EditForm.handlers.copy()
 
+    # Stealing buttons and handlers from edit form and the real wizard
+    # form and merge them together.  Omit the add file function as it is
+    # meaningless in this context.
+    buttons = wizard.ExposureWizardForm.buttons.omit('add_file')
+    handlers = form.EditForm.handlers.copy()
+    for k in buttons.keys():
+        b = buttons[k]
+        handlers.addHandler(
+            b, wizard.ExposureWizardForm.handlers.getHandler(b))
+    buttons += form.EditForm.buttons
+    # Groups are not provided or handled here, but some wizard form
+    # hanlding methods attempts to process this.
     groups = []
 
     def getContent(self):
         return zope.component.getAdapter(self.context, IExposureWizard)
-
-    # XXX duplicating the real class.
-
-    @button.buttonAndHandler(u'Build', name='build')
-    def handleBuild(self, action):
-        errors = util.extractError(self)
-        if errors:
-            self.status = _(u"Unable to build exposure due to input error; "
-                "please review the form and make the appropriate changes, "
-                "update each subsection using the provided button, and try "
-                "again.")
-            return
-
-        wh = zope.component.getAdapter(self.context, IExposureWizard)
-
-        try:
-            util.moldExposure(self.context, self.request, wh.structure)
-        except ProcessingError, e:
-            raise z3c.form.interfaces.ActionExecutionError(e)
-
-        self._updated = True
-        self._next = ''
-
-    @button.buttonAndHandler(u'Revert', name='revert')
-    def handleRevert(self, action):
-        porter = ExposurePort(self.context, self.request)
-        structure = list(porter.export())
-        wh = zope.component.getAdapter(self.context, IExposureWizard)
-        wh.structure = structure
-        self._updated = True
 
 
 class JsonExposureContainerList(JsonListingBasePage):
