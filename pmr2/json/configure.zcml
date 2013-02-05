@@ -101,7 +101,7 @@
 
   <adapter
       for="zope.schema.interfaces.IList
-           z3c.form.interfaces.IFormLayer"
+           .interfaces.ISimpleJsonLayer"
       factory=".widget.JsonDataWidgetFactory"
       provides="z3c.form.interfaces.IFieldWidget"
       />

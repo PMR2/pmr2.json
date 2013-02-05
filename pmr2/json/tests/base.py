@@ -1,5 +1,7 @@
 from cStringIO import StringIO
 
+import zope.interface
+
 from Zope2.App import zcml
 from Products.Five import fiveconfigure
 from Products.PloneTestCase import PloneTestCase as ptc
@@ -7,6 +9,8 @@ from Products.PloneTestCase.layer import onsetup
 from Products.PloneTestCase.layer import onteardown
 
 from pmr2.testing import base
+
+from pmr2.json.interfaces import ISimpleJsonLayer
 
 
 @onsetup
@@ -27,6 +31,8 @@ ptc.setupPloneSite()
 
 
 class TestRequest(base.TestRequest):
+
+    zope.interface.implements(ISimpleJsonLayer)
 
     def __init__(self, *a, **kw):
         self.stdin = kw.pop('stdin', StringIO())
