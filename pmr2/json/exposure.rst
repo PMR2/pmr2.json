@@ -158,3 +158,27 @@ committed earlier::
     >>> original_structure[-1][1]['commit_id'] = u'3'
     >>> json.loads(json.dumps(ewiz1.structure)) == original_structure
     True
+
+Now render the default page of the created exposure.  Currently a search
+for all exposure files is done, with the search done recursively and
+results returned in a flat list::
+
+    >>> portal_url = context.absolute_url()
+    >>> tb.open(portal_url)
+    >>> result = json.loads(tb.contents)
+    >>> print result
+    [{u'URI': u'.../3/dir1/nested/file/view', u'Title': u'file'},
+    {u'URI': u'.../3/file1/view', u'Title': u'file1'}]
+
+The exposure files can be accessed like so::
+
+    >>> tb.open(result[0]['URI'])
+    >>> result = json.loads(tb.contents)
+    >>> result
+    {u'file_type': u'/plone/docgen_type',
+    u'source_uri':
+    u'http://nohost/plone/workspace/test/rawfile/3/dir1/nested/file',
+    u'views': {u'docgen':
+    u'http://nohost/plone/exposure/3/dir1/nested/file/docgen',
+    u'filename_note':
+    u'http://nohost/plone/exposure/3/dir1/nested/file/filename_note'}}

@@ -14,7 +14,11 @@ class JsonPage(SimplePage):
     Ensure that the custom mimetype is sent.
     """
 
+    indent = None
     json_mimetype = 'application/vnd.physiome.pmr2.json.0'
+
+    def dumps(self, obj):
+        return json.dumps(obj, indent=self.indent)
 
     def __call__(self):
         self.request.response.setHeader('Content-Type', self.json_mimetype)

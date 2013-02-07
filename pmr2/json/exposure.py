@@ -8,6 +8,7 @@ from Products.CMFCore.utils import getToolByName
 
 from pmr2.z3cform import form
 
+from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.interfaces import IExposureWizard
 from pmr2.app.exposure.browser import util
 from pmr2.app.exposure.browser import wizard
@@ -42,13 +43,48 @@ class JsonExposureContainerList(JsonListingBasePage):
     portal_type = 'Exposure'
 
 
-#class JsonExposurePage(JsonPage, ExposurePage):
-#
-#    def render(self):
-#        obj = {
-#            'id': self.context.id,
-#            'url': self.context.absolute_url(),
-#            'description': self.context.description,
-#        }
-#
-#        return json.dumps(obj)
+class JsonExposurePage(JsonPage):
+
+    def update(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        query = {
+            'portal_type': 'ExposureFile',
+            'path': [
+                u'/'.join(self.context.getPhysicalPath()),
+            ],
+            'sort_on': 'sortable_title',
+        }
+        results = catalog(**query)
+
+        keys = ['Title', 'URI']
+        result = [dict(zip(keys, (i.Title, i.getURL() + '/view',)))
+            for i in results]
+        self.obj = result
+
+    def render(self):
+        return self.dumps(self.obj)
+
+
+class JsonExposureFilePage(JsonPage):
+
+    def update(self):
+        helper = zope.component.queryAdapter(self.context,
+            IExposureSourceAdapter)
+        if not helper:
+            # XXX exception of some sort
+            return False
+        exposure, workspace, path = helper.source()
+        keys = ('source_uri', 'file_type', 'views',)
+
+        source_uri = '%s/%s/%s/%s' % (workspace.absolute_url(),
+            'rawfile', exposure.commit_id, path)
+        file_type = self.context.file_type
+        views = dict([(v, '/'.join((self.context.absolute_url(), v)))
+            for v in self.context.views])
+
+        values = (source_uri, file_type, views,)
+        result = dict(zip(keys, values))
+        self.obj = result
+
+    def render(self):
+        return self.dumps(self.obj)
