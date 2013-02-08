@@ -182,3 +182,23 @@ The exposure files can be accessed like so::
     u'http://nohost/plone/exposure/3/dir1/nested/file/docgen',
     u'filename_note':
     u'http://nohost/plone/exposure/3/dir1/nested/file/filename_note'}}
+
+As for what those notes will return, this depend on the implementation
+of the annotation views.  Not all will have the appropriate web service
+views implemented.
+
+First view is the docgen.  Generally this is dedicated for html clients,
+thus there will be no JSON view for them::
+
+    >>> tb.open(result['views']['docgen'])
+    >>> json.loads(tb.contents)
+    Traceback (most recent call last):
+    ...
+    ValueError: No JSON object could be decoded
+
+Whereas views that have json views defined for them will behave as
+expected::
+
+    >>> tb.open(result['views']['filename_note'])
+    >>> json.loads(tb.contents)
+    {u'filename': u'dir1/nested/file'}

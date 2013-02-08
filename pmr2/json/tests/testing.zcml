@@ -3,4 +3,12 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     >
 
+  <browser:page
+      for="pmr2.app.exposure.content.ExposureFile"
+      name="filename_note"
+      class=".browser.JsonFilenameNote"
+      layer="pmr2.json.interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
 </configure>

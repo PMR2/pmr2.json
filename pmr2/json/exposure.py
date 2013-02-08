@@ -71,8 +71,11 @@ class JsonExposureFilePage(JsonPage):
         helper = zope.component.queryAdapter(self.context,
             IExposureSourceAdapter)
         if not helper:
-            # XXX exception of some sort
+            # XXX should raise exception of some sort that hooks into
+            # some error handling stack.
+            self.obj = {'error': 'unable to adapt to exposure source'}
             return False
+
         exposure, workspace, path = helper.source()
         keys = ('source_uri', 'file_type', 'views',)
 
