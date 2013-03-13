@@ -113,9 +113,7 @@ def objToRequest(obj, keys, prefix, request):
         if key in keys:
             request.form[fullkey] = v
 
-def updateJsonForm(form):
-    # As a JSON request is a JSON, read from stdin of request.
-    request = form.request
+def extractRequestObj(request):
     stdin = getattr(request, 'stdin', None)
     if not stdin:
         # nothing
@@ -126,6 +124,12 @@ def updateJsonForm(form):
         obj = json.load(stdin)
     except ValueError:
         return
+    return obj
+
+def updateJsonForm(form):
+    # As a JSON request is a JSON, read from stdin of request.
+    request = form.request
+    obj = extractRequestObj(request)
 
     if not isinstance(obj, dict):
         # Not a JSON object type (hashtable/dict)

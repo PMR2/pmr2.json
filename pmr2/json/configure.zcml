@@ -5,6 +5,24 @@
     
   <include package="pmr2.layer"/>
 
+  <!-- General -->
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="pmr2_json_search"
+      class=".search.JsonSearchPage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="search"
+      class=".search.JsonSearchPage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
   <!-- Dashboard -->
 
   <browser:view
