@@ -34,4 +34,10 @@ def test_suite():
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
+        ztc.ZopeDocFileSuite(
+            'topic.rst', package='pmr2.json',
+            test_class=ptc.FunctionalTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
     ])

@@ -115,6 +115,14 @@
 
   <browser:page
       for="Products.ATContentTypes.interfaces.IATTopic"
+      name="folder_summary_view"
+      class=".topic.ATCTTopicJsonPage"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="Products.ATContentTypes.interfaces.IATTopic"
       name="pmr1_folder_listing"
       class=".topic.ATCTTopicJsonPage"
       layer=".interfaces.ISimpleJsonLayer"
