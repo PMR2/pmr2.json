@@ -162,7 +162,10 @@ def extractFieldsAndActions(form):
             if hasattr(v, 'message'):
                 result.append((k, v.message))
                 continue
-            result.append((k, v))
+            elif callable(v):
+                result.append((k, v()))
+            else:
+                result.append((k, v))
         return dict(result)
 
     for id_, v in form.fields.items():
