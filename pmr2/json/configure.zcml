@@ -60,6 +60,14 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="workspace_edit"
+      class=".workspace.JsonWorkspaceEditForm"
+      layer=".interfaces.ISimpleJsonLayer"
+      permission="cmf.ModifyPortalContent"
+      />
+
   <!-- ExposureContainer -->
 
   <browser:page

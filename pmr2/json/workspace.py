@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
 from pmr2.app.workspace.browser.browser import WorkspaceStorageCreateForm
 from pmr2.app.workspace.browser.browser import WorkspacePage
+from pmr2.app.workspace.browser.browser import WorkspaceEditForm
 
 from pmr2.json.mixin import JsonPage, JsonListingBasePage
 
@@ -28,3 +29,8 @@ class JsonWorkspacePage(JsonPage, WorkspacePage):
         }
 
         return json.dumps(obj)
+
+
+class JsonWorkspaceEditForm(SimpleJsonFormMixin,
+        WorkspaceEditForm):
+    pass

@@ -81,3 +81,15 @@ redirected to the created resource.  Check that the resource loads.
     u'test'
     >>> result['description']
     u'Test Dummy'
+
+Now see if it is possible to edit the workspace.
+::
+
+    >>> tb.open(portal_url + '/w/test_user_1_/test/edit', data=
+    ...     '{"fields": {"description": "Edited"}, "actions": {"apply": 1}}')
+    >>> tb.open(portal_url + '/w/test_user_1_/test')
+    >>> result = json.loads(tb.contents)
+    >>> result['id']
+    u'test'
+    >>> result['description']
+    u'Edited'
