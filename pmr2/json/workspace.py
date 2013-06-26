@@ -22,9 +22,17 @@ class JsonWorkspaceContainerList(JsonListingBasePage):
 class JsonWorkspacePage(JsonPage, WorkspacePage):
 
     def render(self):
+        context_owner = self.context.getOwner()
+        fullname = context_owner.getProperty('fullname', context_owner.getId())
+        email = context_owner.getProperty('email', None)
+        owner = fullname
+        if email:
+            owner += ' <%s>' % email
+
         obj = {
             'id': self.context.id,
             'url': self.context.absolute_url(),
+            'owner': owner,
             'description': self.context.description,
         }
 
