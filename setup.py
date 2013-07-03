@@ -25,6 +25,7 @@ setup(name='pmr2.json',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'plone.app.collection',
       ],
       entry_points="""
       # -*- Entry points: -*-
