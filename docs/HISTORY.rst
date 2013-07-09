@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.1 - Unreleased
+0.1 - 2013-07-08
 ----------------
 
-* Initial release
+* Initial release of web services support for PMR.
 
