@@ -1,10 +1,15 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="pmr2.json">
     
   <include package="Products.CMFCore" file="permissions.zcml" />
   <include package="pmr2.layer"/>
+
+  <configure zcml:condition="installed pmr2.tempauth"> 
+    <include file="tempauth.zcml"/>
+  </configure>
 
   <!-- General -->
 

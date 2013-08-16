@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2.json">
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="request_temporary_password"
+      class=".tempauth.VndContextTempAuthRequestForm"
+      permission="zope2.View"
+      />
+
+</configure>
