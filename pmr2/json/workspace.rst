@@ -93,3 +93,5 @@ Now see if it is possible to edit the workspace.
     u'test'
     >>> result['description']
     u'Edited'
+    >>> result['storage']
+    u'dummy_storage'

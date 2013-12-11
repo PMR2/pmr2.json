@@ -34,6 +34,7 @@ class JsonWorkspacePage(JsonPage, WorkspacePage):
             'url': self.context.absolute_url(),
             'owner': owner,
             'description': self.context.description,
+            'storage': self.context.storage,
         }
 
         return json.dumps(obj)
