@@ -143,6 +143,8 @@ def updateJsonForm(form):
     fields = obj.get('fields', {})
     action = obj.get('actions', {})
 
+    # XXX might be a good idea to report errors to client if malformed
+    # value types are received.
     objToRequest(fields, form.fields.keys(), prefix, request)
     objToRequest(action, form.buttons.keys(), a_prefix, request)
 
