@@ -7,8 +7,14 @@
   <include package="Products.CMFCore" file="permissions.zcml" />
   <include package="pmr2.layer"/>
 
+  <!-- Package specific -->
+
   <configure zcml:condition="installed pmr2.tempauth"> 
     <include file="tempauth.zcml"/>
+  </configure>
+
+  <configure zcml:condition="installed pmr2.ricordo"> 
+    <include file="ricordo.zcml"/>
   </configure>
 
   <!-- General -->
