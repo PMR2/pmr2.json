@@ -17,6 +17,10 @@
     <include file="ricordo.zcml"/>
   </configure>
 
+  <configure zcml:condition="installed pmr2.virtuoso"> 
+    <include file="virtuoso.zcml"/>
+  </configure>
+
   <!-- General -->
 
   <browser:view
