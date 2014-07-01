@@ -15,6 +15,8 @@
 
   <configure zcml:condition="installed pmr2.ricordo"> 
     <include file="ricordo.zcml"/>
+    <!-- XXX make this proper once we figure out what to do with this -->
+    <include file="mapclient.zcml"/>
   </configure>
 
   <configure zcml:condition="installed pmr2.virtuoso"> 
