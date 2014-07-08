@@ -9,12 +9,12 @@ class QueryForm(SimpleJsonFormMixin, mapclient.QueryForm):
 
     def render(self):
         if self._searched:
-            return json.dumps([{
+            return json.dumps({'results': [{
                 'data': v['data'],
                 'source': v['source'],
                 'obj': {
                     'href': v['source'] or v['obj'].getURL(),
                     'title': v['obj'].Title or v['source'],
                 },
-            } for v in self.results()])
+            } for v in self.results()]})
         return super(QueryForm, self).render()
