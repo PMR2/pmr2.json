@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3 - 2014-08-14
+----------------
+
+* Support for ``pmr2.ricordo`` and ``pmr2.virtuoso``.
+* New test harnesses.
+
 0.2 - 2014-04-03
 ----------------
 
