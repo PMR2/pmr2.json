@@ -28,6 +28,7 @@ Now post a structure::
     >>> original_structure = [
     ...     ['dir1/nested/file', {
     ...         'file_type': '/plone/docgen_type',
+    ...         'hidden_views': [],
     ...         'views': [
     ...             [u'docgen', {'source': 'dir1/nested/file',
     ...                                    'generator': u'safe_html'}],
@@ -48,6 +49,7 @@ Now post a structure::
     ...         'Subject': [],
     ...     }],
     ...     ['file1', {
+    ...         'hidden_views': [],
     ...         'views': [
     ...             [u'edited_note', {'note': u'Testing'}],
     ...             [u'post_edited_note', {'chars': 4}],
