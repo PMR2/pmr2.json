@@ -53,3 +53,15 @@ the default view also registered to provide this same view::
     >>> print tb.contents
     [{"target": "http://nohost/plone/news/reset", "title": "Reset"},
      {"target": "http://nohost/plone/news/test", "title": "Test News"}]
+
+Newer version of the mime type will no longer return a naked list,
+instead it will return a dictionary with the results in the key
+``results``.  Both views can co-exist due to how layers work::
+
+    >>> tb = Browser()
+    >>> tb.addHeader('Accept', 'application/vnd.physiome.pmr2.json.1')
+    >>> tb.open(portal_url + '/news')
+    >>> print tb.contents
+    {"results":
+    [{"target": "http://nohost/plone/news/reset", "title": "Reset"},
+     {"target": "http://nohost/plone/news/test", "title": "Test News"}]}

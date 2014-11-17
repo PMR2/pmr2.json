@@ -15,6 +15,9 @@ class JsonPage(SimplePage):
     """
 
     indent = None
+    # we could derive the mimetype header to send back to client but
+    # this needs to wait until complete handling of accept header is
+    # done.
     json_mimetype = 'application/vnd.physiome.pmr2.json.0'
 
     def dumps(self, obj):

@@ -7,7 +7,13 @@ from pmr2.app.interfaces import IPMR2AppLayer
 
 class ISimpleJsonLayer(IPMR2AppLayer, IDefaultBrowserLayer):
     """
-    The simple json layer.
+    The base simple json layer.
+    """
+
+
+class ISimpleJsonLayer1(ISimpleJsonLayer):
+    """
+    Version 1.
     """
 
 
