@@ -21,6 +21,10 @@
     <include file="virtuoso.zcml"/>
   </configure>
 
+  <include package=".v0"/>
+
+  <include file="topic.zcml"/>
+
   <!-- General -->
 
   <browser:view
@@ -124,74 +128,6 @@
       name="exposure_file_document_view"
       class=".exposure.JsonExposureFilePage"
       layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <!-- atct topic -->
-
-  <browser:page
-      for="Products.ATContentTypes.interfaces.IATTopic"
-      name="atct_topic_view"
-      class=".topic.ATCTTopicJsonPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="plone.app.collection.interfaces.ICollection"
-      name="summary_view"
-      class=".topic.ATCTTopicJsonPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="plone.app.collection.interfaces.ICollection"
-      name="folder_summary_view"
-      class=".topic.ATCTTopicJsonPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="Products.ATContentTypes.interfaces.IATTopic"
-      name="pmr1_folder_listing"
-      class=".topic.ATCTTopicJsonPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <!-- XXX version 1 - have to figure out how to structure this -->
-
-  <browser:page
-      for="Products.ATContentTypes.interfaces.IATTopic"
-      name="atct_topic_view"
-      class=".topic.ATCTTopicJsonPage1"
-      layer=".interfaces.ISimpleJsonLayer1"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="plone.app.collection.interfaces.ICollection"
-      name="summary_view"
-      class=".topic.ATCTTopicJsonPage1"
-      layer=".interfaces.ISimpleJsonLayer1"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="plone.app.collection.interfaces.ICollection"
-      name="folder_summary_view"
-      class=".topic.ATCTTopicJsonPage1"
-      layer=".interfaces.ISimpleJsonLayer1"
-      permission="zope2.View"
-      />
-
-  <browser:page
-      for="Products.ATContentTypes.interfaces.IATTopic"
-      name="pmr1_folder_listing"
-      class=".topic.ATCTTopicJsonPage1"
-      layer=".interfaces.ISimpleJsonLayer1"
       permission="zope2.View"
       />
 

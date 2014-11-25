@@ -8,4 +8,4 @@ class ATCTTopicJsonPage(JsonPage):
         results = self.context.queryCatalog()
         keys = ['title', 'target']
         values = [dict(zip(keys, (i.Title, i.getURL(),))) for i in results]
-        return self.dumps({'results': values})
+        return self.dumps(values)
