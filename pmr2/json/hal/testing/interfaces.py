@@ -17,4 +17,5 @@ class IItem(zope.interface.Interface):
     description = zope.schema.TextLine(
         title=u'Description',
         description=u'The description of this item.',
+        required=False,
     )

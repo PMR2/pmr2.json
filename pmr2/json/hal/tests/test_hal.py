@@ -38,14 +38,17 @@ class CollectionsTestCase(unittest.TestCase):
             "data": [
                 {
                     "name": "item_id", "value": null, "prompt": "Item ID",
+                    "type": "TextLine", "required": true,
                     "description": "The unique identifier for this item."
                 },
                 {
                     "name": "name", "value": null, "prompt": "Name",
+                    "type": "TextLine", "required": true,
                     "description": "Name of this item."
                 },
                 {
                     "name": "description", "value": null,
+                    "type": "TextLine", "required": false,
                     "prompt": "Description",
                     "description": "The description of this item."
                 }

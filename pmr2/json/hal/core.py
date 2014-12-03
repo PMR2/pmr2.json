@@ -41,6 +41,8 @@ def formfields_to_collection_template(form):
             'name': id_,
             'prompt': field.get('title'),
             'description': field.get('description'),
+            'type': type(v.field).__name__,
+            'required': v.required,
             'value': None,  # TODO populate this
         })
 
