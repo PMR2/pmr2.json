@@ -1,9 +1,21 @@
-from z3c.form import form
+from z3c.form import button
 from z3c.form import field
+from z3c.form import form
 
 from .interfaces import IItem
 
 
-class ItemForm(form.Form):
+class ItemBaseForm(form.Form):
 
     fields = field.Fields(IItem)
+
+
+class ItemForm(ItemBaseForm):
+
+    @button.buttonAndHandler(u'Save', name='save')
+    def submit(self, action):
+        pass
+
+    @button.buttonAndHandler(u'Save and Notify', name='save_notify')
+    def submit(self, action):
+        pass

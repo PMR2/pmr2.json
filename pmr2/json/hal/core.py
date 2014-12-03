@@ -4,7 +4,7 @@ import json
 def formfields_to_collection_template(form):
     fields_keys = ['description', 'title']
     widget_keys = ['error', 'items', 'klass', 'value',]
-    action_keys = ['title',]
+    action_keys = ['description', 'title',]
     fields = {}
     widgets = {}
     actions = {}
@@ -46,8 +46,17 @@ def formfields_to_collection_template(form):
             'value': None,  # TODO populate this
         })
 
-    for id_, v in form.actions.items():
-        actions[id_] = to_dict(action_keys, v)
+    for id_, a in form.actions.items():
+        action = actions[id_] = to_dict(action_keys, a)
+
+        data.append({
+            'name': id_,
+            'prompt': action.get('title'),
+            'description': action.get('description'),
+            'type': type(a.field).__name__,
+            'required': a.required,
+            'value': None,  # what if button is selected?
+        })
 
     results = {
         'data': data
