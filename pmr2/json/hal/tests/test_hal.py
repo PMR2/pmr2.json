@@ -13,6 +13,16 @@ from pmr2.json.hal.testing import form
 from pmr2.json.hal.testing import interfaces
 
 
+"""
+# XXX issues
+- Options are applied not consistently? figure out how to make it be
+  part of an object or not?
+- Namespace for the types?  How pedantic do we want to map everything
+  between z3c forms and this.
+- Why are standards so hard.
+"""
+
+
 class CollectionsTestCase(unittest.TestCase):
     """
     Collections+JSON test case.
@@ -22,6 +32,7 @@ class CollectionsTestCase(unittest.TestCase):
         setUp(self)
         setupFormDefaults()
         self.item = model.Item()
+        self.option = model.Option()
         self.request = TestRequest()
 
     def tearDown(self):
@@ -39,22 +50,27 @@ class CollectionsTestCase(unittest.TestCase):
                 {
                     "name": "item_id", "value": null, "prompt": "Item ID",
                     "type": "TextLine", "required": true,
+                    "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
                     "name": "name", "value": null, "prompt": "Name",
                     "type": "TextLine", "required": true,
+                    "options": null,
                     "description": "Name of this item."
                 },
                 {
                     "name": "description", "value": null,
                     "type": "TextLine", "required": false,
                     "prompt": "Description",
+                    "options": null,
                     "description": "The description of this item."
                 }
             ]
         }
         """)
+
+        self.assertEqual(result, answer)
 
     def test_handler_render(self):
         """
@@ -77,17 +93,20 @@ class CollectionsTestCase(unittest.TestCase):
                 {
                     "name": "item_id", "value": null, "prompt": "Item ID",
                     "type": "TextLine", "required": true,
+                    "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
                     "name": "name", "value": null, "prompt": "Name",
                     "type": "TextLine", "required": true,
+                    "options": null,
                     "description": "Name of this item."
                 },
                 {
                     "name": "description", "value": null,
                     "type": "TextLine", "required": false,
                     "prompt": "Description",
+                    "options": null,
                     "description": "The description of this item."
                 },
                 {
@@ -108,12 +127,50 @@ class CollectionsTestCase(unittest.TestCase):
 
         self.assertEqual(result, answer)
 
+    def test_choice_render(self):
+        """
+        Choice rendering
+        """
 
-        # for when we do options:
-        # {name: "gender", value: "male", prompt: "Gender", options: [
-        #     {value: "male", text: "Male"}, 
-        #     {value: "female", text: "Female"}
-        # ]}
+        f = form.OptionForm(self.option, self.request)
+        f.update()
+
+        result = core.formfields_to_collection_template(f)
+
+        # XXX the --NOVALUE-- token really needs rethinking.  Plone
+        # does not seem to let mapping of these things to be done nicely
+        answer = json.loads("""
+        {
+            "data": [
+                {
+                    "name": "item_id", "value": null, "prompt": "Item ID",
+                    "type": "TextLine", "required": true,
+                    "options": null,
+                    "description":
+                        "The item id that this option is attached to."
+                },
+                {
+                    "name": "option", "value": null, "prompt": "Option",
+                    "type": "Choice", "required": false,
+                    "options": [
+                        {"value": "--NOVALUE--", "text": "No value"},
+                        {"value": "small", "text": "small"},
+                        {"value": "medium", "text": "medium"},
+                        {"value": "large",  "text": "large"}
+                    ],
+                    "description": "The desired option."
+                },
+                {
+                    "name": "submit", "value": null,
+                    "type": "Button", "required": false,
+                    "prompt": "Submit",
+                    "description": null
+                }
+            ]
+        }
+        """)
+
+        self.assertEqual(result, answer)
 
 
 def test_suite():

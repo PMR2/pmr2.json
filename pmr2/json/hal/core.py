@@ -36,6 +36,15 @@ def formfields_to_collection_template(form):
         field = fields.get(id_, {})
         widgets[id_].update(field)
 
+        # this is gross.
+        if widgets[id_]['items']:
+            options = [{
+                'text': i['content'],
+                'value': i['value'],
+            } for i in widgets[id_]['items']]
+        else:
+            options = None
+
         # first cut...
         data.append({
             'name': id_,
@@ -44,6 +53,7 @@ def formfields_to_collection_template(form):
             'type': type(v.field).__name__,
             'required': v.required,
             'value': None,  # TODO populate this
+            'options': options,
         })
 
     for id_, a in form.actions.items():

@@ -19,3 +19,18 @@ class IItem(zope.interface.Interface):
         description=u'The description of this item.',
         required=False,
     )
+
+
+class IOption(zope.interface.Interface):
+
+    item_id = zope.schema.TextLine(
+        title=u'Item ID',
+        description=u'The item id that this option is attached to.',
+    )
+
+    option = zope.schema.Choice(
+        title=u'Option',
+        description=u'The desired option.',
+        values=('small', 'medium', 'large',),
+        required=False,
+    )
