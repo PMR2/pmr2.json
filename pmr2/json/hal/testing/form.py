@@ -13,9 +13,9 @@ class ItemBaseForm(form.Form):
 class ItemForm(ItemBaseForm):
 
     @button.buttonAndHandler(u'Save', name='save')
-    def submit(self, action):
+    def save(self, action):
         pass
 
     @button.buttonAndHandler(u'Save and Notify', name='save_notify')
-    def submit(self, action):
+    def save_notify(self, action):
         pass
