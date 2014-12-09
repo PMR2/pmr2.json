@@ -1,13 +1,13 @@
 import unittest
 import json
 
-from z3c.form.testing import TestRequest
 from z3c.form.testing import setUp
 from z3c.form.testing import setupFormDefaults
 from z3c.form.testing import tearDown
 
 from pmr2.json.hal import core
 
+from pmr2.json.hal.testing import TestRequest
 from pmr2.json.hal.testing import model
 from pmr2.json.hal.testing import form
 from pmr2.json.hal.testing import interfaces
