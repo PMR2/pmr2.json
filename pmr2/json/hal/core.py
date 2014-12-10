@@ -1,12 +1,10 @@
 import json
 
 
-def formfields_to_collection_template(form):
-    fields_keys = ['description', 'title']
-    widget_keys = ['error', 'items', 'klass', 'value',]
-    action_keys = ['description', 'title',]
 
-    data = []
+def _append_form_widgets(data, form):
+    if not form.widgets:
+        return
 
     for id_, w in form.widgets.items():
         # this is gross.
@@ -28,6 +26,10 @@ def formfields_to_collection_template(form):
             'options': options,
         })
 
+def _append_form_actions(data, form):
+    if not form.actions:
+        return
+
     for id_, a in form.actions.items():
         data.append({
             'name': id_,
@@ -38,7 +40,18 @@ def formfields_to_collection_template(form):
             'value': None,  # what if button is selected?
         })
 
+def formfields_to_collection_template(form):
+    """
+    Turn the form fields into a collection template.
+    """
+
+    data = []
+
+    _append_form_widgets(data, form)
+    _append_form_actions(data, form)
+
     results = {
         'data': data
     }
     return results
+

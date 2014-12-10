@@ -1,5 +1,6 @@
 import unittest
 import json
+from cStringIO import StringIO
 
 from z3c.form.testing import setUp
 from z3c.form.testing import setupFormDefaults
@@ -71,6 +72,7 @@ class CollectionsTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
+        self.assertEqual(result, f._collection['collection']['template'])
 
     def test_handler_render(self):
         """
@@ -126,6 +128,7 @@ class CollectionsTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
+        self.assertEqual(result, f._collection['collection']['template'])
 
     def test_choice_render(self):
         """
@@ -171,6 +174,7 @@ class CollectionsTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
+        self.assertEqual(result, f._collection['collection']['template'])
 
 
 def test_suite():
