@@ -4,6 +4,28 @@ from z3c.form.form import BaseForm
 
 from pmr2.json.interfaces import ISimpleJsonLayer1
 from pmr2.json.hal.core import formfields_to_collection_template
+from pmr2.json.utils import extractRequestObj
+
+
+def template_to_request(template, request):
+    data = template['data']
+    for d in data:
+        request.form[d.get('prefix', '') + d.get('name', '')] = d.get('value')
+
+def update_json_collection_form(form):
+    obj = extractRequestObj(form.request)
+
+    if not isinstance(obj, dict):
+        # Should probably just check whether the object is a valid
+        # collection.
+        return
+
+    # XXX need to revisit this, for support multiple submissions?
+    template = obj['template']
+
+    # oh boy have to figure out how properly reassign prefixes... maybe
+    # we should keep the prefixes in place..
+    template_to_request(template, form.request)
 
 
 @implementer(ISimpleJsonLayer1)
@@ -25,7 +47,7 @@ class JsonCollectionFormMixin(Form):
         # origin policy support).
         self.disableAuthenticator = True
 
-        # updateJsonForm(self)
+        update_json_collection_form(self)
 
         super(JsonCollectionFormMixin, self).update()
         self._collection = {

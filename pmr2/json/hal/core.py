@@ -1,6 +1,16 @@
 import json
 
+from pmr2.json.utils import extractRequestObj
+from pmr2.json.utils import objToRequest
 
+
+def collection_request_to_form(form):
+    """
+    Turn the collection request (with the collection data object) into
+    the standard one that z3c form understands.
+    """
+
+    collection = extractRequestObj(form.request)
 
 def _append_form_widgets(data, form):
     if not form.widgets:
@@ -22,8 +32,9 @@ def _append_form_widgets(data, form):
             'description': w.field.description,
             'type': type(w.field).__name__,
             'required': w.required,
-            'value': None,  # TODO populate this
+            'value': w.value,
             'options': options,
+            'prefix': form.prefix + form.widgets.prefix,
         })
 
 def _append_form_actions(data, form):
@@ -38,6 +49,9 @@ def _append_form_actions(data, form):
             'type': type(a.field).__name__,
             'required': a.required,
             'value': None,  # what if button is selected?
+            # ideal is this, but values are all wrong
+            # 'prefix': form.prefix + form.buttons.prefix,
+            'prefix': form.prefix + 'buttons.',
         })
 
 def formfields_to_collection_template(form):
