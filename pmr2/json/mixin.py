@@ -7,7 +7,7 @@ from Products.CMFCore.utils import getToolByName
 
 from pmr2.z3cform.page import SimplePage
 from pmr2.json.interfaces import ISimpleJsonLayer
-
+from pmr2.json.utils import extractRequestObj
 
 class JsonPage(SimplePage):
     """
@@ -104,30 +104,6 @@ class SimpleJsonAddFormMixin(SimpleJsonFormMixin):
 
 
 # Helper functions.
-
-def objToRequest(obj, keys, prefix, request):
-    for key, v in obj.iteritems():
-        if key.startswith(prefix):
-            fullkey = key
-            # naively convert this back into a prefixless key to match.
-            key = key[len(prefix):]
-        else:
-            fullkey = prefix + key
-        if key in keys:
-            request.form[fullkey] = v
-
-def extractRequestObj(request):
-    stdin = getattr(request, 'stdin', None)
-    if not stdin:
-        # nothing
-        return 
-
-    stdin.seek(0)
-    try:
-        obj = json.load(stdin)
-    except ValueError:
-        return
-    return obj
 
 def updateJsonForm(form):
     # As a JSON request is a JSON, read from stdin of request.
