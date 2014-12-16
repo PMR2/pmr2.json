@@ -4,13 +4,25 @@ from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 
 
-def collection_request_to_form(form):
-    """
-    Turn the collection request (with the collection data object) into
-    the standard one that z3c form understands.
-    """
+def template_to_request(template, request):
+    data = template['data']
+    for d in data:
+        request.form[d.get('prefix', '') + d.get('name', '')] = d.get('value')
 
-    collection = extractRequestObj(form.request)
+def update_json_collection_form(form):
+    obj = extractRequestObj(form.request)
+
+    if not isinstance(obj, dict):
+        # Should probably just check whether the object is a valid
+        # collection.
+        return
+
+    # XXX need to revisit this, for support multiple submissions?
+    template = obj['template']
+
+    # oh boy have to figure out how properly reassign prefixes... maybe
+    # we should keep the prefixes in place..
+    template_to_request(template, form.request)
 
 def _append_form_widgets(data, form):
     if not form.widgets:

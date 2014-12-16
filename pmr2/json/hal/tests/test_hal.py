@@ -187,6 +187,25 @@ class CollectionsTestCase(unittest.TestCase):
         self.assertEqual(result, answer)
         self.assertEqual(result, f._collection['collection']['template'])
 
+    def test_update_json_collection_form(self):
+        request = TestRequest(stdin=StringIO('''{ "template": {
+            "data": [
+                {
+                    "name": "item_id", "value": 2,
+                    "prefix": "json.widgets."
+                },
+                {
+                    "name": "name", "value": "The Name",
+                    "prefix": "form.widgets."
+                }
+            ]
+        }}'''))
+
+        f = form.ItemForm(self.item, request)
+        core.update_json_collection_form(f)
+        self.assertEqual(request.form['json.widgets.item_id'], 2)
+        self.assertEqual(request.form['form.widgets.name'], 'The Name')
+
     def test_submit_error(self):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
@@ -211,7 +230,6 @@ class CollectionsTestCase(unittest.TestCase):
 
         f = form.ItemForm(self.item, request)
         f.update()
-
         result = core.formfields_to_collection_template(f)
 
         answer = json.loads("""
@@ -262,6 +280,7 @@ class CollectionsTestCase(unittest.TestCase):
         # XXX value for the save MUST be indicated somehow...
 
         self.assertEqual(result, answer)
+        self.assertEqual(result, f._collection['collection']['template'])
 
         # XXX also need to deal with error, should test the functions
         # that f.update() called individually
