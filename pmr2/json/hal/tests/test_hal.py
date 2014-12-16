@@ -277,13 +277,56 @@ class CollectionsTestCase(unittest.TestCase):
         }
         """)
 
-        # XXX value for the save MUST be indicated somehow...
-
         self.assertEqual(result, answer)
         self.assertEqual(result, f._collection['collection']['template'])
 
-        # XXX also need to deal with error, should test the functions
-        # that f.update() called individually
+        error_answer = json.loads("""
+        {
+            "title": "Error",
+            "code": "error",
+            "message": "There were some errors."
+        }
+        """)
+
+        self.assertEqual(error_answer, f._collection['collection']['error'])
+
+        # that item is still unchanged.
+        self.assertIsNone(self.item.description)
+
+    def test_submit_applied(self):
+        """
+        Applies the standard pattern.
+        """
+
+        self.assertIsNone(self.item.item_id)
+
+        request = TestRequest(stdin=StringIO('''{ "template": {
+            "data": [
+                {
+                    "name": "item_id", "value": "TestItem",
+                    "prefix": "json.widgets."
+                },
+                {
+                    "name": "name", "value": "A Test Item Name",
+                    "prefix": "json.widgets."
+                },
+                {
+                    "name": "description", "value": "This describes the item.",
+                    "prefix": "json.widgets."
+                },
+                {
+                    "name": "save", "value": 1,
+                    "prefix": "json.buttons."
+                }
+            ]
+        }}'''))
+
+        f = form.ItemForm(self.item, request)
+        f.update()
+
+        self.assertEqual(self.item.item_id, 'TestItem')
+        self.assertEqual(self.item.name, 'A Test Item Name')
+        self.assertEqual(self.item.description, 'This describes the item.')
 
 
 def test_suite():

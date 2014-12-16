@@ -17,7 +17,13 @@ class ItemForm(ItemBaseForm):
 
     @button.buttonAndHandler(u'Save', name='save')
     def save(self, action):
-        pass
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+
+        content = self.getContent()
+        form.applyChanges(self, content, data)
 
     @button.buttonAndHandler(u'Save and Notify', name='save_notify')
     def save_notify(self, action):

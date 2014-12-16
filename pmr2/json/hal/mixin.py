@@ -16,6 +16,10 @@ class JsonCollectionFormMixin(Form):
     prefix = 'json.'
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
 
+    # XXX prefix the following with _json?
+    _collection = {}
+    _collection_error = {}
+
     def update(self):
         """
         Convert JSON input into standard request.
@@ -36,6 +40,9 @@ class JsonCollectionFormMixin(Form):
                 'template': formfields_to_collection_template(self)
             }
         }
+
+        if self._collection_error:
+            self._collection['collection']['error'] = self._collection_error
         return None
 
     def render(self):
@@ -49,3 +56,13 @@ class JsonCollectionFormMixin(Form):
         # The idea is to capture the widget values and render them.
         self.request.response.setHeader('Content-Type', self.json_mimetype)
         return json.dumps(self._collection)
+
+    def extractData(self, *a, **kw):
+        result = super(JsonCollectionFormMixin, self).extractData(*a, **kw)
+        if result[1]:  # error
+            self._collection_error = {
+                'title': 'Error',
+                'code': 'error',
+                'message': self.formErrorsMessage,
+            }
+        return result
