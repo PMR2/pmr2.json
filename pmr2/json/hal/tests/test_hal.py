@@ -295,7 +295,7 @@ class CollectionsTestCase(unittest.TestCase):
 
     def test_submit_applied(self):
         """
-        Applies the standard pattern.
+        Applies the changes using the standard pattern.
         """
 
         self.assertIsNone(self.item.item_id)
@@ -313,6 +313,42 @@ class CollectionsTestCase(unittest.TestCase):
                 {
                     "name": "description", "value": "This describes the item.",
                     "prefix": "json.widgets."
+                },
+                {
+                    "name": "save", "value": 1,
+                    "prefix": "json.buttons."
+                }
+            ]
+        }}'''))
+
+        f = form.ItemForm(self.item, request)
+        f.update()
+
+        self.assertEqual(self.item.item_id, 'TestItem')
+        self.assertEqual(self.item.name, 'A Test Item Name')
+        self.assertEqual(self.item.description, 'This describes the item.')
+
+    def test_submit_applied_prefixless(self):
+        """
+        The standard submission doesn't generally need the prefix as
+        that is a z3c.form specific field.  Form should be able to
+        automatically compute the intended prefix.
+
+        Unintuitively, buttons are the special case.
+        """
+
+        self.assertIsNone(self.item.item_id)
+
+        request = TestRequest(stdin=StringIO('''{ "template": {
+            "data": [
+                {
+                    "name": "item_id", "value": "TestItem"
+                },
+                {
+                    "name": "name", "value": "A Test Item Name"
+                },
+                {
+                    "name": "description", "value": "This describes the item."
                 },
                 {
                     "name": "save", "value": 1,

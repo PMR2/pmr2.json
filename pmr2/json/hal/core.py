@@ -4,10 +4,11 @@ from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 
 
-def template_to_request(template, request):
+def template_to_request(template, request, default_prefix='json.widgets.'):
     data = template['data']
     for d in data:
-        request.form[d.get('prefix', '') + d.get('name', '')] = d.get('value')
+        prefix = d.get('prefix', default_prefix)
+        request.form[prefix + d.get('name', '')] = d.get('value')
 
 def update_json_collection_form(form):
     obj = extractRequestObj(form.request)
@@ -20,9 +21,9 @@ def update_json_collection_form(form):
     # XXX need to revisit this, for support multiple submissions?
     template = obj['template']
 
-    # oh boy have to figure out how properly reassign prefixes... maybe
-    # we should keep the prefixes in place..
-    template_to_request(template, form.request)
+    # Widgets doesn't have the prefix initialized yet, so just hard-code
+    # this...
+    template_to_request(template, form.request, form.prefix + 'widgets.')
 
 def _append_form_widgets(data, form):
     if not form.widgets:
