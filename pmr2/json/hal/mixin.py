@@ -60,9 +60,17 @@ class JsonCollectionFormMixin(Form):
     def extractData(self, *a, **kw):
         result = super(JsonCollectionFormMixin, self).extractData(*a, **kw)
         if result[1]:  # error
+            errors = [
+                {
+                    'name': e.field.__name__,
+                    'prefix': e.form.prefix + e.form.widgets.prefix,
+                    'message': e.message,
+                } for e in result[1]
+            ]
             self._collection_error = {
                 'title': 'Error',
                 'code': 'error',
                 'message': self.formErrorsMessage,
+                'errors': errors,
             }
         return result

@@ -284,7 +284,14 @@ class CollectionsTestCase(unittest.TestCase):
         {
             "title": "Error",
             "code": "error",
-            "message": "There were some errors."
+            "message": "There were some errors.",
+            "errors": [
+                {
+                    "message": "Constraint not satisfied",
+                    "name": "item_id",
+                    "prefix": "json.widgets."
+                }
+            ]
         }
         """)
 
