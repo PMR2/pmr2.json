@@ -23,7 +23,7 @@ def test_suite():
         ),
 
         ztc.ZopeDocFileSuite(
-            'dashboard.rst', package='pmr2.json',
+            'dashboard.rst', package='pmr2.json.v0',
             test_class=WorkspaceDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),

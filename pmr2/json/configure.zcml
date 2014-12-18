@@ -43,16 +43,6 @@
       permission="zope2.View"
       />
 
-  <!-- Dashboard -->
-
-  <browser:view
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      name="pmr2-dashboard"
-      class=".dashboard.Dashboard"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
   <!-- Workspace -->
 
   <browser:page
