@@ -23,6 +23,7 @@
 
   <include package=".v0"/>
 
+  <include file="dashboard.zcml"/>
   <include file="topic.zcml"/>
 
   <!-- General -->

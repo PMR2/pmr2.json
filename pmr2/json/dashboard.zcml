@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2.json">
+
+  <!-- Dashboard v1 -->
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="pmr2-dashboard"
+      class=".dashboard.Dashboard"
+      layer=".interfaces.ISimpleJsonLayer1"
+      permission="zope2.View"
+      />
+
+</configure>
