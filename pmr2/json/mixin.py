@@ -8,6 +8,7 @@ from Products.CMFCore.utils import getToolByName
 from pmr2.z3cform.page import SimplePage
 from pmr2.json.interfaces import ISimpleJsonLayer
 from pmr2.json.utils import extractRequestObj
+from pmr2.json.utils import objToRequest
 
 class JsonPage(SimplePage):
     """
