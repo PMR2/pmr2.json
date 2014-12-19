@@ -4,6 +4,24 @@ from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 
 
+def generate_hal(links, data=None):
+    """
+    Generates a HAL representation of the input and return as a dict.
+
+    data must be a dict or None.
+    """
+
+    # validation for links could be useful?
+    result = {
+        '_links': links,
+    }
+
+    if data:
+        if '_links' in data:
+            raise ValueError('data cannot contain _links key')
+        result.update(data)
+    return result
+
 def template_to_request(template, request, default_prefix='json.widgets.'):
     data = template['data']
     for d in data:
