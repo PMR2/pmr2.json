@@ -24,6 +24,7 @@
   <include package=".v0"/>
 
   <include file="dashboard.zcml"/>
+  <include file="document.zcml"/>
   <include file="topic.zcml"/>
 
   <!-- General -->

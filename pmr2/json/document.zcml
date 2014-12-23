@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pmr2.json">
+    
+  <!-- atct topic -->
+
+  <browser:page
+      for="Products.ATContentTypes.interfaces.IATDocument"
+      name="document_view"
+      class=".document.ATCTDocumentJsonPage"
+      layer=".interfaces.ISimpleJsonLayer1"
+      permission="zope2.View"
+      />
+
+</configure>
