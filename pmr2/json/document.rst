@@ -19,3 +19,6 @@ Now try again after application of the header::
     >>> '{"href": "http://nohost/plone/plone_control_panel", ' \
     ... '"label": "Site Setup"}' in tb.contents
     True
+    >>> '<a href=\\"http://nohost/plone/plone_control_panel\\">Site Setup</a>'\
+    ...     in tb.contents
+    True
