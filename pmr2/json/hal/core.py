@@ -22,11 +22,10 @@ def generate_hal(links, data=None):
         result.update(data)
     return result
 
-def template_to_request(template, request, default_prefix='json.widgets.'):
+def template_to_request(template, request):
     data = template['data']
     for d in data:
-        prefix = d.get('prefix', default_prefix)
-        request.form[prefix + d.get('name', '')] = d.get('value')
+        request.form[d.get('name', '')] = d.get('value')
 
 def update_json_collection_form(form):
     obj = extractRequestObj(form.request)
@@ -39,9 +38,7 @@ def update_json_collection_form(form):
     # XXX need to revisit this, for support multiple submissions?
     template = obj['template']
 
-    # Widgets doesn't have the prefix initialized yet, so just hard-code
-    # this...
-    template_to_request(template, form.request, form.prefix + 'widgets.')
+    template_to_request(template, form.request)
 
 def _append_form_widgets(data, form):
     if not form.widgets:
@@ -58,14 +55,13 @@ def _append_form_widgets(data, form):
             options = None
 
         data.append({
-            'name': id_,
+            'name': form.prefix + form.widgets.prefix + id_,
             'prompt': w.field.title,
             'description': w.field.description,
             'type': type(w.field).__name__,
             'required': w.required,
             'value': w.value,
             'options': options,
-            'prefix': form.prefix + form.widgets.prefix,
         })
 
 def _append_form_actions(data, form):
@@ -74,15 +70,15 @@ def _append_form_actions(data, form):
 
     for id_, a in form.actions.items():
         data.append({
-            'name': id_,
+            # ideal is this, but values are wrong because where this
+            # function is used (before form.buttons have been updated).
+            # 'name': form.prefix + form.buttons.prefix + id_,
+            'name': form.prefix + 'buttons.' + id_,
             'prompt': a.title,
             'description': None,
             'type': type(a.field).__name__,
             'required': a.required,
             'value': None,  # what if button is selected?
-            # ideal is this, but values are all wrong
-            # 'prefix': form.prefix + form.buttons.prefix,
-            'prefix': form.prefix + 'buttons.',
         })
 
 def formfields_to_collection_template(form):

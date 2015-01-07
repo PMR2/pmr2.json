@@ -49,24 +49,22 @@ class CollectionsTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "item_id", "value": "", "prompt": "Item ID",
+                    "name": "json.widgets.item_id",
+                    "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "name", "value": "", "prompt": "Name",
+                    "name": "json.widgets.name", "value": "", "prompt": "Name",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "Name of this item."
                 },
                 {
-                    "name": "description", "value": "",
+                    "name": "json.widgets.description", "value": "",
                     "prompt": "Description",
                     "type": "TextLine", "required": false,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The description of this item."
                 }
@@ -96,39 +94,39 @@ class CollectionsTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "item_id", "value": "", "prompt": "Item ID",
+                    "name": "json.widgets.item_id",
+                    "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "name", "value": "", "prompt": "Name",
+                    "name": "json.widgets.name",
+                    "value": "", "prompt": "Name",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "Name of this item."
                 },
                 {
-                    "name": "description", "value": "",
+                    "name": "json.widgets.description",
+                    "value": "",
                     "prompt": "Description",
                     "type": "TextLine", "required": false,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The description of this item."
                 },
                 {
-                    "name": "save", "value": null,
+                    "name": "json.buttons.save",
+                    "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save",
-                    "prefix": "json.buttons.",
                     "description": null
                 },
                 {
-                    "name": "save_notify", "value": null,
+                    "name": "json.buttons.save_notify",
+                    "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save and Notify",
-                    "prefix": "json.buttons.",
                     "description": null
                 }
             ]
@@ -154,17 +152,17 @@ class CollectionsTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "item_id", "value": "", "prompt": "Item ID",
+                    "name": "json.widgets.item_id",
+                    "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
                     "options": null,
-                    "prefix": "json.widgets.",
                     "description":
                         "The item id that this option is attached to."
                 },
                 {
-                    "name": "option", "value": [], "prompt": "Option",
+                    "name": "json.widgets.option",
+                    "value": [], "prompt": "Option",
                     "type": "Choice", "required": false,
-                    "prefix": "json.widgets.",
                     "options": [
                         {"value": "--NOVALUE--", "text": "No value"},
                         {"value": "small", "text": "small"},
@@ -174,9 +172,9 @@ class CollectionsTestCase(unittest.TestCase):
                     "description": "The desired option."
                 },
                 {
-                    "name": "submit", "value": null,
+                    "name": "json.buttons.submit",
+                    "value": null,
                     "type": "Button", "required": false,
-                    "prefix": "json.buttons.",
                     "prompt": "Submit",
                     "description": null
                 }
@@ -191,12 +189,12 @@ class CollectionsTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "item_id", "value": 2,
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.item_id",
+                    "value": 2
                 },
                 {
-                    "name": "name", "value": "The Name",
-                    "prefix": "form.widgets."
+                    "name": "form.widgets.name",
+                    "value": "The Name"
                 }
             ]
         }}'''))
@@ -210,20 +208,20 @@ class CollectionsTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "item_id", "value": "TestItem\\nID",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.item_id",
+                    "value": "TestItem\\nID"
                 },
                 {
-                    "name": "name", "value": "A Test Item Name",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.name",
+                    "value": "A Test Item Name"
                 },
                 {
-                    "name": "description", "value": "This describes the item.",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.description",
+                    "value": "This describes the item."
                 },
                 {
-                    "name": "save", "value": 1,
-                    "prefix": "json.buttons."
+                    "name": "json.buttons.save",
+                    "value": 1
                 }
             ]
         }}'''))
@@ -236,40 +234,40 @@ class CollectionsTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "item_id", "value": "TestItem\\nID",
+                    "name": "json.widgets.item_id",
+                    "value": "TestItem\\nID",
                     "prompt": "Item ID",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "name", "value": "A Test Item Name",
+                    "name": "json.widgets.name",
+                    "value": "A Test Item Name",
                     "prompt": "Name",
                     "type": "TextLine", "required": true,
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "Name of this item."
                 },
                 {
-                    "name": "description", "value": "This describes the item.",
+                    "name": "json.widgets.description",
+                    "value": "This describes the item.",
                     "type": "TextLine", "required": false,
                     "prompt": "Description",
-                    "prefix": "json.widgets.",
                     "options": null,
                     "description": "The description of this item."
                 },
                 {
-                    "name": "save", "value": null,
+                    "name": "json.buttons.save",
+                    "value": null,
                     "type": "Button", "required": false,
-                    "prefix": "json.buttons.",
                     "prompt": "Save",
                     "description": null
                 },
                 {
-                    "name": "save_notify", "value": null,
+                    "name": "json.buttons.save_notify",
+                    "value": null,
                     "type": "Button", "required": false,
-                    "prefix": "json.buttons.",
                     "prompt": "Save and Notify",
                     "description": null
                 }
@@ -288,8 +286,7 @@ class CollectionsTestCase(unittest.TestCase):
             "errors": [
                 {
                     "message": "Constraint not satisfied",
-                    "name": "item_id",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.item_id"
                 }
             ]
         }
@@ -310,56 +307,17 @@ class CollectionsTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "item_id", "value": "TestItem",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.item_id", "value": "TestItem"
                 },
                 {
-                    "name": "name", "value": "A Test Item Name",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.name", "value": "A Test Item Name"
                 },
                 {
-                    "name": "description", "value": "This describes the item.",
-                    "prefix": "json.widgets."
+                    "name": "json.widgets.description",
+                    "value": "This describes the item."
                 },
                 {
-                    "name": "save", "value": 1,
-                    "prefix": "json.buttons."
-                }
-            ]
-        }}'''))
-
-        f = form.ItemForm(self.item, request)
-        f.update()
-
-        self.assertEqual(self.item.item_id, 'TestItem')
-        self.assertEqual(self.item.name, 'A Test Item Name')
-        self.assertEqual(self.item.description, 'This describes the item.')
-
-    def test_submit_applied_prefixless(self):
-        """
-        The standard submission doesn't generally need the prefix as
-        that is a z3c.form specific field.  Form should be able to
-        automatically compute the intended prefix.
-
-        Unintuitively, buttons are the special case.
-        """
-
-        self.assertIsNone(self.item.item_id)
-
-        request = TestRequest(stdin=StringIO('''{ "template": {
-            "data": [
-                {
-                    "name": "item_id", "value": "TestItem"
-                },
-                {
-                    "name": "name", "value": "A Test Item Name"
-                },
-                {
-                    "name": "description", "value": "This describes the item."
-                },
-                {
-                    "name": "save", "value": 1,
-                    "prefix": "json.buttons."
+                    "name": "json.buttons.save", "value": 1
                 }
             ]
         }}'''))

@@ -62,8 +62,8 @@ class JsonCollectionFormMixin(Form):
         if result[1]:  # error
             errors = [
                 {
-                    'name': e.field.__name__,
-                    'prefix': e.form.prefix + e.form.widgets.prefix,
+                    'name': e.form.prefix + e.form.widgets.prefix +
+                            e.field.__name__,
                     'message': e.message,
                 } for e in result[1]
             ]
