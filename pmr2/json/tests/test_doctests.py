@@ -41,14 +41,14 @@ def test_suite():
         ),
 
         ztc.ZopeDocFileSuite(
-            'workspace.rst', package='pmr2.json',
-            test_class=WorkspaceDocTestCase,
+            'exposure.rst', package='pmr2.json.v0',
+            test_class=CompleteDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
         ztc.ZopeDocFileSuite(
-            'exposure.rst', package='pmr2.json',
-            test_class=CompleteDocTestCase,
+            'workspace.rst', package='pmr2.json',
+            test_class=WorkspaceDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 

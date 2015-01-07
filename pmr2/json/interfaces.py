@@ -10,6 +10,8 @@ class ISimpleJsonLayer(IPMR2AppLayer, IDefaultBrowserLayer):
     The base simple json layer.
     """
 
+    # XXX should move this interface to v0
+
 
 class ISimpleJsonLayer1(ISimpleJsonLayer):
     """

@@ -5,6 +5,7 @@
     i18n_domain="pmr2.json">
     
   <include file="dashboard.zcml"/>
+  <include file="exposure.zcml"/>
   <include file="topic.zcml"/>
 
 </configure>

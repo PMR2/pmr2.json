@@ -1,0 +1,53 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pmr2.json">
+    
+  <include package="Products.CMFCore" file="permissions.zcml" />
+
+  <!-- ExposureContainer -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureContainer"
+      name="folder_listing"
+      class=".exposure.JsonExposureContainerList"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <!-- Exposure -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposure"
+      name="wizard"
+      class=".exposure.JsonExposureWizardForm"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="cmf.ModifyPortalContent"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposure"
+      name="exposure_info"
+      class=".exposure.JsonExposurePage"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFolder"
+      name="exposure_info"
+      class=".exposure.JsonExposurePage"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFile"
+      name="exposure_file_document_view"
+      class=".exposure.JsonExposureFilePage"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+</configure>
