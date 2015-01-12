@@ -2,6 +2,7 @@ from zope.interface import implementer
 from z3c.form.form import Form
 from z3c.form.form import BaseForm
 
+from pmr2.json.mixin import JsonPage
 from pmr2.json.interfaces import ISimpleJsonLayer1
 from pmr2.json.hal.core import formfields_to_collection_template
 from pmr2.json.hal.core import update_json_collection_form
@@ -19,6 +20,9 @@ class JsonCollectionFormMixin(Form):
     # XXX prefix the following with _json?
     _collection = {}
     _collection_error = {}
+
+    def dumps(self, obj):
+        return json.dumps(obj, indent=self.indent)
 
     def update(self):
         """
@@ -55,7 +59,7 @@ class JsonCollectionFormMixin(Form):
         # XXX this is a naive implementation
         # The idea is to capture the widget values and render them.
         self.request.response.setHeader('Content-Type', self.json_mimetype)
-        return json.dumps(self._collection)
+        return self.dumps(self._collection)
 
     def extractData(self, *a, **kw):
         result = super(JsonCollectionFormMixin, self).extractData(*a, **kw)
@@ -74,3 +78,8 @@ class JsonCollectionFormMixin(Form):
                 'errors': errors,
             }
         return result
+
+
+class JsonCollectionPage(JsonPage):
+
+    json_mimetype = 'application/vnd.physiome.pmr2.json.1'
