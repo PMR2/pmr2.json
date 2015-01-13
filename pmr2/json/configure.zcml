@@ -25,6 +25,7 @@
 
   <include file="dashboard.zcml"/>
   <include file="document.zcml"/>
+  <include file="exposure.zcml"/>
   <include file="topic.zcml"/>
 
   <!-- General -->
