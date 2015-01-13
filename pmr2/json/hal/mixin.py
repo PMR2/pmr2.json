@@ -5,6 +5,8 @@ from z3c.form.form import BaseForm
 from pmr2.json.mixin import JsonPage
 from pmr2.json.interfaces import ISimpleJsonLayer1
 from pmr2.json.hal.core import formfields_to_collection_template
+from pmr2.json.hal.core import generate_hal
+from pmr2.json.hal.core import generate_collection
 from pmr2.json.hal.core import update_json_collection_form
 
 
@@ -80,6 +82,36 @@ class JsonCollectionFormMixin(Form):
         return result
 
 
+class JsonHalPage(JsonPage):
+
+    json_mimetype = 'application/vnd.physiome.pmr2.json.1'
+
+    def __init__(self, context, request):
+        super(JsonCollectionPage, self).__init__(context, request)
+        self.links = []
+
+    def render(self):
+        return self.dumps(generate_hal(self.links, data=self.data))
+
+
 class JsonCollectionPage(JsonPage):
 
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
+
+    def __init__(self, context, request):
+        super(JsonCollectionPage, self).__init__(context, request)
+        self.links = None
+        self.items = None
+        self.queries = None
+        self.collection = None
+        self.error = None
+
+    def render(self):
+        return self.dumps(generate_collection(
+            href=self.context.absolute_url() + '/' + self.__name__,
+            links=self.links,
+            items=self.items,
+            queries=self.queries,
+            template=self.template,
+            error=self.error,
+        ))
