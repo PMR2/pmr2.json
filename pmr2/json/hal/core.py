@@ -27,6 +27,15 @@ def template_to_request(template, request):
     for d in data:
         request.form[d.get('name', '')] = d.get('value')
 
+def generate_collection(version='1.0', href=None, links=None, items=None,
+        queries=None, template=None, error=None):
+    keys = (
+        'version', 'href', 'links', 'items', 'queries', 'template', 'error',)
+    kw = locals()
+    return {
+        'collection': {key: kw[key] for key in keys if kw.get(key) is not None}
+    }
+
 def update_json_collection_form(form):
     obj = extractRequestObj(form.request)
 

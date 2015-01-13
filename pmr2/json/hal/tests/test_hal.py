@@ -24,7 +24,7 @@ from pmr2.json.hal.testing import interfaces
 """
 
 
-class CollectionsTestCase(unittest.TestCase):
+class CollectionsFormConversionTestCase(unittest.TestCase):
     """
     Collections+JSON test case.
     """
@@ -330,8 +330,23 @@ class CollectionsTestCase(unittest.TestCase):
         self.assertEqual(self.item.description, 'This describes the item.')
 
 
+class CollectionsUtilsTestCase(unittest.TestCase):
+
+    def test_core_generate_collection_base(self):
+        result = core.generate_collection(href='http://www.example.com/')
+        self.assertEqual(result, {'collection': {
+            'version': '1.0',
+            'href': 'http://www.example.com/',
+        }})
+
+    def test_core_generate_collection_omitted(self):
+        self.assertRaises(TypeError, core.generate_collection,
+            href='http://www.example.com/', wrongarg='foo')
+
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(CollectionsTestCase))
+    suite.addTest(makeSuite(CollectionsFormConversionTestCase))
+    suite.addTest(makeSuite(CollectionsUtilsTestCase))
     return suite
