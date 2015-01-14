@@ -47,6 +47,12 @@ def test_suite():
         ),
 
         ztc.ZopeDocFileSuite(
+            'exposure.rst', package='pmr2.json.',
+            test_class=CompleteDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        ztc.ZopeDocFileSuite(
             'workspace.rst', package='pmr2.json',
             test_class=WorkspaceDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
