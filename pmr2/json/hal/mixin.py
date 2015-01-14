@@ -1,3 +1,5 @@
+import json
+
 from zope.interface import implementer
 from z3c.form.form import Form
 from z3c.form.form import BaseForm
@@ -18,6 +20,7 @@ class JsonCollectionFormMixin(Form):
 
     prefix = 'json.'
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
+    indent = False
 
     # XXX prefix the following with _json?
     _collection = {}
@@ -103,7 +106,7 @@ class JsonCollectionPage(JsonPage):
         self.links = None
         self.items = None
         self.queries = None
-        self.collection = None
+        self.template=None
         self.error = None
 
     def render(self):
