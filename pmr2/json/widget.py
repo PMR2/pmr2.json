@@ -12,7 +12,7 @@ from pmr2.json.interfaces import IJsonWidget
 class JsonListConverter(BaseDataConverter):
     zope.component.adapts(IList, IJsonWidget)
 
-    def toWidgetvalue(self, value):
+    def toWidgetValue(self, value):
         return value
 
     def toFieldValue(self, value):
