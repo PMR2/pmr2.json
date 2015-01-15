@@ -229,6 +229,7 @@ expected::
 
     >>> tb.open(result['collection']['links'][1]['href'])
     >>> json.loads(tb.contents)
-    {u'filename': u'dir1/nested/file'}
-
-### TODO fix above
+    {u'collection': {u'items':
+    [{u'name': u'filename', u'value': u'dir1/nested/file'}],
+    u'href': u'http://nohost/plone/exposure/3/dir1/nested/file/filename_note',
+    u'version': u'1.0'}}

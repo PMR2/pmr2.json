@@ -11,4 +11,12 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="pmr2.app.exposure.content.ExposureFile"
+      name="filename_note"
+      class=".browser.JsonCollectionFilenameNote"
+      layer="pmr2.json.interfaces.ISimpleJsonLayer1"
+      permission="zope2.View"
+      />
+
 </configure>
