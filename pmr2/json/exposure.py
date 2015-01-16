@@ -23,6 +23,7 @@ from pmr2.json.hal.mixin import JsonCollectionPage
 class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
 
     fields = field.Fields(IExposureWizard)
+    _doomed = False
 
     # Stealing buttons and handlers from edit form and the real wizard
     # form and merge them together.  Omit the add file function as it is
@@ -40,6 +41,18 @@ class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
 
     def getContent(self):
         return zope.component.getAdapter(self.context, IExposureWizard)
+
+    def update(self):
+        result = super(JsonExposureWizardForm, self).update()
+        # A rather hacky way to deal with the error message.
+        if self._doomed:
+            self._collection['collection']['error'] = {
+                'title': 'Error',
+                'code': 'error',
+                'message': 'There were errors generating the exposure',
+                'errors': [],
+            }
+        return result
 
 
 class JsonExposureContainerList(JsonListingBasePage):

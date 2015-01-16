@@ -161,13 +161,14 @@ Unfortunately at this point in time there is no strict schema involved.
 If we were to attempt to build this an error will be generated::
 
     >>> data = json.dumps({'template': {'data': [{
-    ...     'name': 'json.buttons.actions', 'value': True}]}})
+    ...     'name': 'json.buttons.build', 'value': True}]}})
     >>> tb.open(portal_url + '/wizard', data=data)
     >>> print tb.url
     http://nohost/plone/exposure/3/wizard
     >>> result = json.loads(tb.contents)
-
-### TODO error handling
+    >>> result['collection']['error']
+    {u'message': u'There were errors generating the exposure',
+     u'code': u'error', u'errors': [], u'title': u'Error'}
 
 Select revert to regenerate the wizard using the structure that was
 committed earlier::
