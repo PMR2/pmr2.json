@@ -18,4 +18,4 @@ class JsonFilenameNote(ExposureFileViewBase, JsonPage):
 class JsonCollectionFilenameNote(ExposureFileViewBase, JsonCollectionPage):
 
     def update(self):
-        self.items = [{'name': 'filename', 'value': self.note.filename}]
+        self._jc_items = [{'name': 'filename', 'value': self.note.filename}]

@@ -11,6 +11,9 @@ from pmr2.json.hal.core import generate_hal
 from pmr2.json.hal.core import generate_collection
 from pmr2.json.hal.core import update_json_collection_form
 
+from pmr2.json.hal.core import json_collection_view_init
+from pmr2.json.hal.core import json_collection_view_render
+
 
 @implementer(ISimpleJsonLayer1)
 class JsonCollectionFormMixin(Form):
@@ -102,19 +105,8 @@ class JsonCollectionPage(JsonPage):
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
 
     def __init__(self, context, request):
+        json_collection_view_init(self)
         super(JsonCollectionPage, self).__init__(context, request)
-        self.links = None
-        self.items = None
-        self.queries = None
-        self.template=None
-        self.error = None
 
     def render(self):
-        return self.dumps(generate_collection(
-            href=self.context.absolute_url() + '/' + self.__name__,
-            links=self.links,
-            items=self.items,
-            queries=self.queries,
-            template=self.template,
-            error=self.error,
-        ))
+        return json_collection_view_render(self)

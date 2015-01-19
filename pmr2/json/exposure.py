@@ -96,7 +96,7 @@ class JsonExposureFilePage(JsonCollectionPage):
         if not helper:
             # XXX should raise exception of some sort that hooks into
             # some error handling stack.
-            self.error = {'error': 'unable to adapt to exposure source'}
+            self._jc_error = {'error': 'unable to adapt to exposure source'}
             return False
 
         exposure, workspace, path = helper.source()
@@ -105,7 +105,7 @@ class JsonExposureFilePage(JsonCollectionPage):
         source_uri = '%s/%s/%s/%s' % (workspace.absolute_url(),
             'rawfile', exposure.commit_id, path)
 
-        self.items = [{
+        self._jc_items = [{
             'href': self.context.absolute_url() + '/view',
             'data': [
                 # TODO automate this via interface for simple case?
@@ -131,7 +131,7 @@ class JsonExposureFilePage(JsonCollectionPage):
         vocab = zope.component.getUtility(IVocabulary,
             name='pmr2.vocab.ExposureFileAnnotators')
 
-        self.links = [
+        self._jc_links = [
             {
                 'href': '/'.join([self.context.absolute_url(), v]),
                 'rel': 'section',

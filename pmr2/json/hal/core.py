@@ -36,6 +36,23 @@ def generate_collection(version='1.0', href=None, links=None, items=None,
         'collection': {key: kw[key] for key in keys if kw.get(key) is not None}
     }
 
+def json_collection_view_init(view):
+    view._jc_links = None
+    view._jc_items = None
+    view._jc_queries = None
+    view._jc_template = None
+    view._jc_error = None
+
+def json_collection_view_render(view):
+    return view.dumps(generate_collection(
+        href=view.context.absolute_url() + '/' + view.__name__,
+        links=view._jc_links,
+        items=view._jc_items,
+        queries=view._jc_queries,
+        template=view._jc_template,
+        error=view._jc_error,
+    ))
+
 def update_json_collection_form(form):
     obj = extractRequestObj(form.request)
 
