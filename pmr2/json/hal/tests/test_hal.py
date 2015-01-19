@@ -73,7 +73,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
-        self.assertEqual(result, f._collection['collection']['template'])
+        self.assertEqual(result, f._jc_template)
 
     def test_handler_render(self):
         """
@@ -134,7 +134,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
-        self.assertEqual(result, f._collection['collection']['template'])
+        self.assertEqual(result, f._jc_template)
 
     def test_choice_render(self):
         """
@@ -183,7 +183,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
-        self.assertEqual(result, f._collection['collection']['template'])
+        self.assertEqual(result, f._jc_template)
 
     def test_update_json_collection_form(self):
         request = TestRequest(stdin=StringIO('''{ "template": {
@@ -276,7 +276,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         """)
 
         self.assertEqual(result, answer)
-        self.assertEqual(result, f._collection['collection']['template'])
+        self.assertEqual(result, f._jc_template)
 
         error_answer = json.loads("""
         {
@@ -292,7 +292,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         }
         """)
 
-        self.assertEqual(error_answer, f._collection['collection']['error'])
+        self.assertEqual(error_answer, f._jc_error)
 
         # that item is still unchanged.
         self.assertIsNone(self.item.description)

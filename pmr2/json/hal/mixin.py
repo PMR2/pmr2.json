@@ -25,9 +25,9 @@ class JsonCollectionFormMixin(Form):
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
     indent = False
 
-    # XXX prefix the following with _json?
-    _collection = {}
-    _collection_error = {}
+    def __init__(self, context, request):
+        json_collection_view_init(self)
+        super(JsonCollectionFormMixin, self).__init__(context, request)
 
     def dumps(self, obj):
         return json.dumps(obj, indent=self.indent)
@@ -45,16 +45,9 @@ class JsonCollectionFormMixin(Form):
         update_json_collection_form(self)
 
         super(JsonCollectionFormMixin, self).update()
-        self._collection = {
-            'collection': {
-                'version': '1.0',
-                'href': None,  # XXX figure how to determine with fallback
-                'template': formfields_to_collection_template(self)
-            }
-        }
 
-        if self._collection_error:
-            self._collection['collection']['error'] = self._collection_error
+        self._jc_template = formfields_to_collection_template(self)
+
         return None
 
     def render(self):
@@ -67,7 +60,7 @@ class JsonCollectionFormMixin(Form):
         # XXX this is a naive implementation
         # The idea is to capture the widget values and render them.
         self.request.response.setHeader('Content-Type', self.json_mimetype)
-        return self.dumps(self._collection)
+        return json_collection_view_render(self)
 
     def extractData(self, *a, **kw):
         result = super(JsonCollectionFormMixin, self).extractData(*a, **kw)
@@ -79,7 +72,7 @@ class JsonCollectionFormMixin(Form):
                     'message': e.message,
                 } for e in result[1]
             ]
-            self._collection_error = {
+            self._jc_error = {
                 'title': 'Error',
                 'code': 'error',
                 'message': self.formErrorsMessage,

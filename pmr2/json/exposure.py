@@ -46,7 +46,7 @@ class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
         result = super(JsonExposureWizardForm, self).update()
         # A rather hacky way to deal with the error message.
         if self._doomed:
-            self._collection['collection']['error'] = {
+            self._jc_error = {
                 'title': 'Error',
                 'code': 'error',
                 'message': 'There were errors generating the exposure',

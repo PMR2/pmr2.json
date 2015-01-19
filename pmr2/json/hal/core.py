@@ -44,8 +44,13 @@ def json_collection_view_init(view):
     view._jc_error = None
 
 def json_collection_view_render(view):
+    try:
+        href = view.context.absolute_url() + '/' + view.__name__
+    except TypeError:
+        href = view.__name__
+
     return view.dumps(generate_collection(
-        href=view.context.absolute_url() + '/' + view.__name__,
+        href=href,
         links=view._jc_links,
         items=view._jc_items,
         queries=view._jc_queries,
