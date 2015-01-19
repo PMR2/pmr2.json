@@ -8,7 +8,7 @@ from Products.PloneTestCase import ptc
 from pmr2.json.tests import base
 
 try:
-    from pmr2.json import ricordo
+    from pmr2.json.v0 import ricordo
     _ricordo = True
 except ImportError:
     _ricordo = False
