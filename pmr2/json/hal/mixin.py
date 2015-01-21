@@ -81,6 +81,15 @@ class JsonCollectionFormMixin(Form):
         return result
 
 
+class JsonCollectionAddFormMixin(JsonCollectionFormMixin):
+
+    def render(self):
+        if self._finishedAdd:
+            self.request.response.redirect(self.nextURL())
+            return ""
+        return super(JsonCollectionAddFormMixin, self).render()
+
+
 class JsonHalPage(JsonPage):
 
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
