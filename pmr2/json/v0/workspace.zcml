@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pmr2.json">
+    
+  <include package="Products.CMFCore" file="permissions.zcml" />
+  <include package="pmr2.layer"/>
+
+  <!-- Workspace -->
+
+  <browser:page
+      for="pmr2.app.workspace.browser.adding.WorkspaceContainerAdding"
+      name="addWorkspace"
+      class=".workspace.JsonWorkspaceStorageCreateForm"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="cmf.AddPortalContent"
+      />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspaceContainer"
+      name="folder_listing"
+      class=".workspace.JsonWorkspaceContainerList"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="workspace_view"
+      class=".workspace.JsonWorkspacePage"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="workspace_edit"
+      class=".workspace.JsonWorkspaceEditForm"
+      layer="..interfaces.ISimpleJsonLayer"
+      permission="cmf.ModifyPortalContent"
+      />
+
+</configure>

@@ -6,6 +6,7 @@
     
   <include file="dashboard.zcml"/>
   <include file="exposure.zcml"/>
+  <include file="workspace.zcml"/>
   <include file="topic.zcml"/>
 
   <configure zcml:condition="installed pmr2.ricordo"> 
