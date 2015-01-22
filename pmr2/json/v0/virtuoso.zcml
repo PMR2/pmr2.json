@@ -7,7 +7,7 @@
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="rdf_indexer"
       class=".virtuoso.WorkspaceRDFInfoEditForm"
-      layer=".interfaces.ISimpleJsonLayer"
+      layer="..interfaces.ISimpleJsonLayer"
       permission="cmf.ModifyPortalContent"
       />
 

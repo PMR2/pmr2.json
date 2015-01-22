@@ -7,12 +7,6 @@
   <include package="Products.CMFCore" file="permissions.zcml" />
   <include package="pmr2.layer"/>
 
-  <!-- Package specific -->
-
-  <configure zcml:condition="installed pmr2.virtuoso"> 
-    <include file="virtuoso.zcml"/>
-  </configure>
-
   <include package=".v0"/>
 
   <include file="dashboard.zcml"/>
