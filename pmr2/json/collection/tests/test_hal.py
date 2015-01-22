@@ -6,12 +6,12 @@ from z3c.form.testing import setUp
 from z3c.form.testing import setupFormDefaults
 from z3c.form.testing import tearDown
 
-from pmr2.json.hal import core
+from pmr2.json.collection import core
 
-from pmr2.json.hal.testing import TestRequest
-from pmr2.json.hal.testing import model
-from pmr2.json.hal.testing import form
-from pmr2.json.hal.testing import interfaces
+from pmr2.json.collection.testing import TestRequest
+from pmr2.json.collection.testing import model
+from pmr2.json.collection.testing import form
+from pmr2.json.collection.testing import interfaces
 
 
 """

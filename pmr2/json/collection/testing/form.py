@@ -5,7 +5,7 @@ from z3c.form import form
 from .interfaces import IItem
 from .interfaces import IOption
 
-from pmr2.json.hal.mixin import JsonCollectionFormMixin
+from pmr2.json.collection.mixin import JsonCollectionFormMixin
 
 
 class ItemBaseForm(JsonCollectionFormMixin, form.Form):

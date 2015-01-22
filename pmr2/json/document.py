@@ -1,26 +1,38 @@
 from lxml import etree
 from lxml import html
 
-from pmr2.json.mixin import JsonPage
-from pmr2.json.hal.core import generate_hal
+from pmr2.json.collection.mixin import JsonCollectionPage
 
 
-class ATCTDocumentJsonPage(JsonPage):
+class ATCTDocumentJsonPage(JsonCollectionPage):
 
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
 
-    def render(self):
+    def update(self):
         text = self.context.getText()
         tree = html.fragment_fromstring(text, create_parent=True)
         elements = tree.xpath('//*[@href]')
 
-        links = [{
-            'href': el.get('href'),
-            'label': el.text,
-        } for el in elements]
+        self._jc_links = [
+            {
+                # XXX determine whether relation is the right one.
+                # For the default one, 'section' might be better.
+                'rel': 'bookmark',
+                'href': el.get('href'),
+                'label': el.text,
+            }
+            for el in elements
+        ]
 
-        data = {
-            'contents': text,
-        }
+        href = '/'.join([self.context.absolute_url(), self.__name__])
+        self._jc_href = href
 
-        return self.dumps(generate_hal(links, data=data))
+        self._jc_items = [{
+            'href': href,
+            'data': [
+                {
+                    'name': 'contents',
+                    'value': text,
+                },
+            ]
+        }]

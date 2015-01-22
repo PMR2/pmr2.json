@@ -4,7 +4,7 @@ JSON Dashboard
 The dashboard lists available options/functions exposed to end-users of
 the webservice API
 
-Version 1 complies with HAL::
+Version 1 complies with Collection+JSON::
 
     >>> import json
     >>> tb = self.testbrowser
@@ -13,8 +13,7 @@ Version 1 complies with HAL::
     >>> tb.open(portal_url + '/pmr2-dashboard')
     >>> result = json.loads(tb.contents)
     >>> result.keys()
-    [u'_links']
-    >>> links = result[u'_links']
-    >>> keys = links.keys()
-    >>> print sorted(keys)
-    [u'self', u'workspace-add', u'workspace-home']
+    [u'collection']
+    >>> links = result['collection']['links']
+    >>> print sorted(item['name'] for item in links)
+    [u'workspace-add', u'workspace-home']

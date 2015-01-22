@@ -6,13 +6,13 @@ from z3c.form.form import BaseForm
 
 from pmr2.json.mixin import JsonPage
 from pmr2.json.interfaces import ISimpleJsonLayer1
-from pmr2.json.hal.core import formfields_to_collection_template
-from pmr2.json.hal.core import generate_hal
-from pmr2.json.hal.core import generate_collection
-from pmr2.json.hal.core import update_json_collection_form
+from pmr2.json.collection.core import formfields_to_collection_template
+from pmr2.json.collection.core import generate_hal
+from pmr2.json.collection.core import generate_collection
+from pmr2.json.collection.core import update_json_collection_form
 
-from pmr2.json.hal.core import json_collection_view_init
-from pmr2.json.hal.core import json_collection_view_render
+from pmr2.json.collection.core import json_collection_view_init
+from pmr2.json.collection.core import json_collection_view_render
 
 
 @implementer(ISimpleJsonLayer1)

@@ -8,9 +8,9 @@ from pmr2.app.workspace.browser.browser import WorkspaceEditForm
 
 from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
 from pmr2.json.mixin import JsonPage, JsonListingBasePage
-from pmr2.json.hal.mixin import JsonCollectionFormMixin
-from pmr2.json.hal.mixin import JsonCollectionAddFormMixin
-from pmr2.json.hal.mixin import JsonCollectionPage
+from pmr2.json.collection.mixin import JsonCollectionFormMixin
+from pmr2.json.collection.mixin import JsonCollectionAddFormMixin
+from pmr2.json.collection.mixin import JsonCollectionPage
 
 
 class JsonWorkspaceStorageCreateForm(JsonCollectionAddFormMixin,

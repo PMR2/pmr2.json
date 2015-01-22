@@ -16,8 +16,8 @@ from pmr2.app.exposure.browser import util
 from pmr2.app.exposure.browser import wizard
 
 from pmr2.json.mixin import JsonListingBasePage
-from pmr2.json.hal.mixin import JsonCollectionFormMixin
-from pmr2.json.hal.mixin import JsonCollectionPage
+from pmr2.json.collection.mixin import JsonCollectionFormMixin
+from pmr2.json.collection.mixin import JsonCollectionPage
 
 
 class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):

@@ -1,7 +1,7 @@
 from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
 from pmr2.json.mixin import JsonPage
 
-from pmr2.json.hal.core import generate_hal
+from pmr2.json.collection.core import generate_hal
 
 
 class ATCTTopicJsonPage(JsonPage):

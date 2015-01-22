@@ -4,31 +4,25 @@ import zope.component
 from pmr2.app.settings.interfaces import IDashboardOption
 from pmr2.app.settings.browser import dashboard
 
-from pmr2.json.hal.core import generate_hal
-from pmr2.json.mixin import JsonPage
+from pmr2.json.collection.mixin import JsonCollectionPage
 
 
-class Dashboard(JsonPage, dashboard.Dashboard):
+class Dashboard(JsonCollectionPage, dashboard.Dashboard):
 
-    json_mimetype = 'application/vnd.physiome.pmr2.json.1'
-
-    def render(self):
+    def update(self):
         options = zope.component.getAdapters(
             (self, self.request), IDashboardOption)
 
-        links = {
-            name: {
+        self._jc_links = [
+            {
+                # XXX determine whether relation is the right one.
+                'rel': 'bookmark',
+                'name': name,
                 'href': '/'.join([
                     self.context.absolute_url(), self.__name__, name]),
                 'label': option.title,
             }
             for name, option in options
-        }
+        ]
 
-        # inject the recommended self link.
-        links['self'] = {
-            'href': '/'.join([self.context.absolute_url(), self.__name__]),
-            'label': 'self',
-        }
-
-        return json.dumps(generate_hal(links))
+        self._jc_href = '/'.join([self.context.absolute_url(), self.__name__])

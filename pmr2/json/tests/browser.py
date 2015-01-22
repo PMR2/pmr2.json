@@ -3,7 +3,7 @@ import json
 from pmr2.app.exposure.browser.browser import ExposureFileViewBase
 
 from pmr2.json.mixin import JsonPage
-from pmr2.json.hal.mixin import JsonCollectionPage
+from pmr2.json.collection.mixin import JsonCollectionPage
 
 
 class JsonFilenameNote(ExposureFileViewBase, JsonPage):
