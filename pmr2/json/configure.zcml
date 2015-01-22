@@ -9,10 +9,6 @@
 
   <!-- Package specific -->
 
-  <configure zcml:condition="installed pmr2.tempauth"> 
-    <include file="tempauth.zcml"/>
-  </configure>
-
   <configure zcml:condition="installed pmr2.virtuoso"> 
     <include file="virtuoso.zcml"/>
   </configure>
