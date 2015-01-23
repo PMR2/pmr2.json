@@ -23,7 +23,7 @@ def generate_hal(links, data=None):
     return result
 
 def template_to_request(template, request):
-    data = template['data']
+    data = template.get('data', [])
     for d in data:
         request.form[d.get('name', '')] = d.get('value')
 
@@ -67,7 +67,7 @@ def update_json_collection_form(form):
         return
 
     # XXX need to revisit this, for support multiple submissions?
-    template = obj['template']
+    template = obj.get('template', {})
 
     template_to_request(template, form.request)
 
