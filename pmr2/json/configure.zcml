@@ -36,7 +36,7 @@
   <!-- The layer applier -->
 
   <utility
-      name="application/vnd.physiome.pmr2.json.0"
+      name="application/vnd.physiome.pmr2.json"
       factory=".layer.SimpleJsonLayerApplier"
       provides="pmr2.layer.interfaces.ILayerApplier"
       />

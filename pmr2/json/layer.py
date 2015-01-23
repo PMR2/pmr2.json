@@ -9,6 +9,8 @@ from pmr2.json.interfaces import ISimpleJsonLayer1
 layer_table = (
     ('application/vnd.physiome.pmr2.json.1', ISimpleJsonLayer1),
     ('application/vnd.physiome.pmr2.json.0', ISimpleJsonLayer),
+
+    # This is the default, fallback one onto the latest version.
     ('application/json', ISimpleJsonLayer1),
 )
 
