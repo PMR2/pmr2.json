@@ -78,10 +78,14 @@ def _append_form_widgets(data, form):
     for id_, w in form.widgets.items():
         # this is gross.
         if hasattr(form.widgets[id_], 'items'):
+            items = form.widgets[id_].items
+            if callable(items):
+                items = items()
+
             options = [{
                 'text': i['content'],
                 'value': i['value'],
-            } for i in form.widgets[id_].items()]
+            } for i in items]
         else:
             options = None
 
