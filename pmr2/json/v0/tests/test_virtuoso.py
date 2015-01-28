@@ -11,7 +11,7 @@ from pmr2.virtuoso.tests.layer import PMR2_VIRTUOSO_INTEGRATION_LAYER
 from pmr2.json.tests import base
 
 try:
-    from pmr2.json import virtuoso
+    from pmr2.json.v0 import virtuoso
     _virtuoso = True
 except ImportError:
     _virtuoso = False
