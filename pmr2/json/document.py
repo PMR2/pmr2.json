@@ -19,7 +19,7 @@ class ATCTDocumentJsonPage(JsonCollectionPage):
                 # For the default one, 'section' might be better.
                 'rel': 'bookmark',
                 'href': el.get('href'),
-                'label': el.text,
+                'prompt': el.text,
             }
             for el in elements
         ]
