@@ -62,6 +62,10 @@ due to layers::
     >>> tb.addHeader('Accept', 'application/vnd.physiome.pmr2.json.1')
     >>> tb.open(portal_url + '/news')
     >>> print tb.contents
-    {"_links":
-    [{"href": "http://nohost/plone/news/reset", "label": "Reset"},
-     {"href": "http://nohost/plone/news/test", "label": "Test News"}]}
+    {"collection":
+     {"href": "http://nohost/plone/news/aggregator/folder_summary_view",
+      "version": "1.0", "links":
+      [{"href": "http://nohost/plone/news/reset",
+        "rel": "bookmark", "label": "Reset"},
+       {"href": "http://nohost/plone/news/test",
+         "rel": "bookmark", "label": "Test News"}]}}

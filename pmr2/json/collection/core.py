@@ -1,5 +1,7 @@
 import json
 
+from Products.CMFCore.utils import getToolByName
+
 from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 
@@ -131,3 +133,15 @@ def formfields_to_collection_template(form):
     }
     return results
 
+def view_url(context, brain):
+    """
+    Helper method for views to turn a brain into a proper target URL for
+    client consumption.
+    """
+
+    siteprop = context.portal_properties.site_properties
+    use_view_action = getattr(siteprop,
+        'typesUseViewActionInListings', ())
+    if brain.portal_type in use_view_action:
+        return brain.getURL() + '/view'
+    return brain.getURL()

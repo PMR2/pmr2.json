@@ -1,24 +1,24 @@
 from pmr2.json.mixin import SimpleJsonFormMixin, SimpleJsonAddFormMixin
 from pmr2.json.mixin import JsonPage
 
-from pmr2.json.collection.core import generate_hal
+from pmr2.json.collection.mixin import JsonCollectionPage
+from pmr2.json.collection.core import view_url
 
 
-class ATCTTopicJsonPage(JsonPage):
+class ATCTTopicJsonPage(JsonCollectionPage):
 
-    def render(self):
-        siteprop = self.context.portal_properties.site_properties
-        use_view_action = getattr(siteprop, 'typesUseViewActionInListings', ())
-
-        def view_url(item):
-            if item.portal_type in use_view_action:
-                return item.getURL() + '/view'
-            return item.getURL()
-
+    def update(self):
         results = self.context.queryCatalog()
-        links = [{
-            'href': view_url(i),
-            'label': i.Title,
-        } for i in results]
+        self._jc_links = [
+            {
+                # XXX determine whether relation is the right one.
+                # For the default one, 'section' might be better.
+                'rel': 'bookmark',
+                'href': view_url(self.context, i),
+                'label': i.Title,
+            }
+            for i in results
+        ]
 
-        return self.dumps(generate_hal(links))
+        href = '/'.join([self.context.absolute_url(), self.__name__])
+        self._jc_href = href
