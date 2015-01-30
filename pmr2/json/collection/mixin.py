@@ -1,5 +1,6 @@
 import json
 
+from Products.CMFCore.utils import getToolByName
 from zope.interface import implementer
 from z3c.form.form import Form
 from z3c.form.form import BaseForm
@@ -10,6 +11,7 @@ from pmr2.json.collection.core import formfields_to_collection_template
 from pmr2.json.collection.core import generate_hal
 from pmr2.json.collection.core import generate_collection
 from pmr2.json.collection.core import update_json_collection_form
+from pmr2.json.collection.core import view_url
 
 from pmr2.json.collection.core import json_collection_view_init
 from pmr2.json.collection.core import json_collection_view_render
@@ -112,3 +114,29 @@ class JsonCollectionPage(JsonPage):
 
     def render(self):
         return json_collection_view_render(self)
+
+
+class JsonCollectionCatalogPage(JsonCollectionPage):
+
+    portal_type = None
+
+    def update(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+
+        query = {
+            'portal_type': self.portal_type,
+            'path': [
+                u'/'.join(self.context.getPhysicalPath()),
+            ],
+            'sort_on': 'sortable_title',
+        }
+
+        results = catalog(**query)
+
+        self._jc_links = [
+            {
+                'rel': 'bookmark',
+                'href': view_url(self.context, i),
+                'prompt': i.Title,
+            } for i in results
+        ]
