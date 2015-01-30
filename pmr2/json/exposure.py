@@ -15,7 +15,7 @@ from pmr2.app.exposure.interfaces import IExposureWizard
 from pmr2.app.exposure.browser import util
 from pmr2.app.exposure.browser import wizard
 
-from pmr2.json.mixin import JsonListingBasePage
+from pmr2.json.collection.mixin import JsonCollectionCatalogPage
 from pmr2.json.collection.mixin import JsonCollectionFormMixin
 from pmr2.json.collection.mixin import JsonCollectionPage
 
@@ -55,42 +55,17 @@ class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
         return result
 
 
-class JsonExposureContainerList(JsonListingBasePage):
+class JsonExposureContainerList(JsonCollectionCatalogPage):
     portal_type = 'Exposure'
 
 
-class JsonExposurePage(JsonCollectionPage):
-
-    def update(self):
-        catalog = getToolByName(self.context, 'portal_catalog')
-        query = {
-            'portal_type': 'ExposureFile',
-            'path': [
-                u'/'.join(self.context.getPhysicalPath()),
-            ],
-            'sort_on': 'sortable_title',
-        }
-        results = catalog(**query)
-
-        keys = ['Title', 'URI']
-        result = [dict(zip(keys, (i.Title, i.getURL() + '/view',)))
-            for i in results]
-        self.obj = result
-
-    def render(self):
-        return self.dumps(self.obj)
+class JsonExposurePage(JsonCollectionCatalogPage):
+    portal_type = 'ExposureFile'
 
 
 class JsonExposureFilePage(JsonCollectionPage):
 
     def update(self):
-        """
-        {
-            "collection": {
-            }
-        }
-        """
-
         helper = zope.component.queryAdapter(self.context,
             IExposureSourceAdapter)
         if not helper:

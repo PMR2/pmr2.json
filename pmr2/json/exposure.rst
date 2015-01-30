@@ -187,16 +187,20 @@ Now render the default page of the created exposure.  Currently a search
 for all exposure files is done, with the search done recursively and
 results returned in a flat list::
 
-    >>> portal_url = context.absolute_url()
-    >>> tb.open(portal_url)
+    >>> target = context.absolute_url()
+    >>> tb.open(target)
     >>> result = json.loads(tb.contents)
-    >>> print result
-    [{u'URI': u'.../3/dir1/nested/file/view', u'Title': u'file'},
-    {u'URI': u'.../3/file1/view', u'Title': u'file1'}]
+    >>> result['collection']['links'] == [
+    ... {u'href': u'http://nohost/plone/exposure/3/dir1/nested/file/view',
+    ...  u'prompt': u'file', u'rel': u'bookmark'},
+    ... {u'href': u'http://nohost/plone/exposure/3/file1/view',
+    ...  u'prompt': u'file1', u'rel': u'bookmark'}]
+    True
+
 
 The exposure files can be accessed like so::
 
-    >>> tb.open(result[0]['URI'])
+    >>> tb.open(result['collection']['links'][0]['href'])
     >>> result = json.loads(tb.contents)
     >>> result['collection']['links'] == [
     ... {
