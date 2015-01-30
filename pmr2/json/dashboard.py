@@ -20,7 +20,7 @@ class Dashboard(JsonCollectionPage, dashboard.Dashboard):
                 'name': name,
                 'href': '/'.join([
                     self.context.absolute_url(), self.__name__, name]),
-                'label': option.title,
+                'prompt': option.title,
             }
             for name, option in options
         ]

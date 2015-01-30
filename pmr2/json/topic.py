@@ -15,7 +15,7 @@ class ATCTTopicJsonPage(JsonCollectionPage):
                 # For the default one, 'section' might be better.
                 'rel': 'bookmark',
                 'href': view_url(self.context, i),
-                'label': i.Title,
+                'prompt': i.Title,
             }
             for i in results
         ]

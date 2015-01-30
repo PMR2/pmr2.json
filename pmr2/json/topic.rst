@@ -66,6 +66,6 @@ due to layers::
      {"href": "http://nohost/plone/news/aggregator/folder_summary_view",
       "version": "1.0", "links":
       [{"href": "http://nohost/plone/news/reset",
-        "rel": "bookmark", "label": "Reset"},
+        "prompt": "Reset", "rel": "bookmark"},
        {"href": "http://nohost/plone/news/test",
-         "rel": "bookmark", "label": "Test News"}]}}
+         "prompt": "Test News", "rel": "bookmark"}]}}
