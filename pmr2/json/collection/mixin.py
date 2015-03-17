@@ -23,7 +23,7 @@ class JsonCollectionFormMixin(Form):
     Mixin for z3c.form type forms that renders JSON+Collection.
     """
 
-    prefix = 'json.'
+    # prefix = 'json.'
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
     indent = False
 

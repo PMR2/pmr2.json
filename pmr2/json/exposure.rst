@@ -77,11 +77,11 @@ Now post a structure::
     ...     'template': {
     ...         'data': [
     ...             {
-    ...                 'name': 'json.widgets.structure',
+    ...                 'name': 'form.widgets.structure',
     ...                 'value': raw_structure,
     ...             },
     ...             {
-    ...                 'name': 'json.buttons.apply',
+    ...                 'name': 'form.buttons.apply',
     ...                 'value': True,
     ...             }
     ...         ],
@@ -104,7 +104,7 @@ Ensure that the values have been correctly applied::
 
 Now generate the exposure::
 
-    >>> payload['template']['data'][1]['name'] = 'json.buttons.build'
+    >>> payload['template']['data'][1]['name'] = 'form.buttons.build'
     >>> stdin = StringIO()
     >>> json.dump(payload, stdin)
     >>> request = TestRequest(method='POST', stdin=stdin)
@@ -149,7 +149,7 @@ Now use the testbrowser class to attempt to view this::
 Then manipulate.  Note that error checking is still NOT implemented::
 
     >>> payload['template']['data'][0]['value'] = ['faildata']
-    >>> payload['template']['data'][1]['name'] = 'json.buttons.apply'
+    >>> payload['template']['data'][1]['name'] = 'form.buttons.apply'
     >>> data = json.dumps(payload)
     >>> tb.open(portal_url + '/wizard', data=data)
     >>> print tb.url
@@ -161,7 +161,7 @@ Unfortunately at this point in time there is no strict schema involved.
 If we were to attempt to build this an error will be generated::
 
     >>> data = json.dumps({'template': {'data': [{
-    ...     'name': 'json.buttons.build', 'value': True}]}})
+    ...     'name': 'form.buttons.build', 'value': True}]}})
     >>> tb.open(portal_url + '/wizard', data=data)
     >>> print tb.url
     http://nohost/plone/exposure/3/wizard
@@ -174,7 +174,7 @@ Select revert to regenerate the wizard using the structure that was
 committed earlier::
 
     >>> data = json.dumps({'template': {'data': [{
-    ...     'name': 'json.buttons.revert', 'value': True}]}})
+    ...     'name': 'form.buttons.revert', 'value': True}]}})
     >>> tb.open(portal_url + '/wizard', data=data)
     >>> print tb.url
     http://nohost/plone/exposure/3/wizard

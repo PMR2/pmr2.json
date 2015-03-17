@@ -22,14 +22,14 @@ Try accessing the news aggregator's summary view normally::
     >>> print tb.contents
     <BLANKLINE>
     ...
-    <li class="navTreeItem visualNoMarker section-reset">
-      <a href="http://nohost/plone/news/reset" ...>
-        <span>Reset</span>
-      </a>
-    </li>
     <li class="navTreeItem visualNoMarker section-test">
       <a href="http://nohost/plone/news/test" ...>
         <span>Test News</span>
+      </a>
+    </li>
+    <li class="navTreeItem visualNoMarker section-reset">
+      <a href="http://nohost/plone/news/reset" ...>
+        <span>Reset</span>
       </a>
     </li>
     ...

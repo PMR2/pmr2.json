@@ -15,8 +15,8 @@ form::
     >>> result = json.loads(form())
     >>> sorted([datum['name'] for datum in
     ...     result['collection']['template']['data']])
-    [u'json.buttons.add', u'json.widgets.description', u'json.widgets.id',
-     u'json.widgets.storage', u'json.widgets.title']
+    [u'form.buttons.add', u'form.widgets.description', u'form.widgets.id',
+     u'form.widgets.storage', u'form.widgets.title']
 
 
 As the expected payload will be another JSON object, let's try to submit
@@ -26,7 +26,7 @@ some JSON to this form::
     ...     'template': {
     ...         'data': [
     ...             {
-    ...                 'name': 'json.buttons.add',
+    ...                 'name': 'form.buttons.add',
     ...                 'value': True,
     ...             }
     ...         ],
@@ -40,9 +40,9 @@ some JSON to this form::
     >>> result = json.loads(form.render())
     >>> result['collection']['error']
     {u'message': u'There were some errors.', u'code': u'error', u'errors':
-     [{u'message': u'Required input is missing.', u'name': u'json.widgets.id'},
+     [{u'message': u'Required input is missing.', u'name': u'form.widgets.id'},
       {u'message': u'Required input is missing.',
-      u'name': u'json.widgets.storage'}], u'title': u'Error'}
+      u'name': u'form.widgets.storage'}], u'title': u'Error'}
 
 So the form parses the input and the specified action triggered some
 validation and the results are returned as a JSON string.
@@ -58,8 +58,8 @@ browser class.::
     >>> result = json.loads(tb.contents)
     >>> sorted([datum['name'] for datum in
     ...     result['collection']['template']['data']])
-    [u'json.buttons.add', u'json.widgets.description', u'json.widgets.id',
-     u'json.widgets.storage', u'json.widgets.title']
+    [u'form.buttons.add', u'form.widgets.description', u'form.widgets.id',
+     u'form.widgets.storage', u'form.widgets.title']
 
 Try to submit the same data.::
 
@@ -68,9 +68,9 @@ Try to submit the same data.::
     >>> result = json.loads(tb.contents)
     >>> result['collection']['error']
     {u'message': u'There were some errors.', u'code': u'error', u'errors':
-     [{u'message': u'Required input is missing.', u'name': u'json.widgets.id'},
+     [{u'message': u'Required input is missing.', u'name': u'form.widgets.id'},
       {u'message': u'Required input is missing.',
-      u'name': u'json.widgets.storage'}], u'title': u'Error'}
+      u'name': u'form.widgets.storage'}], u'title': u'Error'}
 
 Now do this for real, apply the test data and see if the dummy workspace
 can be created like this.::
@@ -79,19 +79,19 @@ can be created like this.::
     ...     'template': {
     ...         'data': [
     ...             {
-    ...                 'name': 'json.widgets.id',
+    ...                 'name': 'form.widgets.id',
     ...                 'value': 'test',
     ...             },
     ...             {
-    ...                 'name': 'json.widgets.description',
+    ...                 'name': 'form.widgets.description',
     ...                 'value': 'Test Dummy',
     ...             },
     ...             {
-    ...                 'name': 'json.widgets.storage',
+    ...                 'name': 'form.widgets.storage',
     ...                 'value': 'dummy_storage',
     ...             },
     ...             {
-    ...                 'name': 'json.buttons.add',
+    ...                 'name': 'form.buttons.add',
     ...                 'value': True,
     ...             },
     ...         ],
@@ -122,11 +122,11 @@ Now see if it is possible to edit the workspace.::
     ...     'template': {
     ...         'data': [
     ...             {
-    ...                 'name': 'json.widgets.description',
+    ...                 'name': 'form.widgets.description',
     ...                 'value': 'Edited',
     ...             },
     ...             {
-    ...                 'name': 'json.buttons.apply',
+    ...                 'name': 'form.buttons.apply',
     ...                 'value': True,
     ...             },
     ...         ],

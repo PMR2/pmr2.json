@@ -49,20 +49,20 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
                     "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "json.widgets.name", "value": "", "prompt": "Name",
+                    "name": "form.widgets.name", "value": "", "prompt": "Name",
                     "type": "TextLine", "required": true,
                     "options": null,
                     "description": "Name of this item."
                 },
                 {
-                    "name": "json.widgets.description", "value": "",
+                    "name": "form.widgets.description", "value": "",
                     "prompt": "Description",
                     "type": "TextLine", "required": false,
                     "options": null,
@@ -94,21 +94,21 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
                     "options": null,
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "json.widgets.name",
+                    "name": "form.widgets.name",
                     "value": "", "prompt": "Name",
                     "type": "TextLine", "required": true,
                     "options": null,
                     "description": "Name of this item."
                 },
                 {
-                    "name": "json.widgets.description",
+                    "name": "form.widgets.description",
                     "value": "",
                     "prompt": "Description",
                     "type": "TextLine", "required": false,
@@ -116,14 +116,14 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "description": "The description of this item."
                 },
                 {
-                    "name": "json.buttons.save",
+                    "name": "form.buttons.save",
                     "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save",
                     "description": null
                 },
                 {
-                    "name": "json.buttons.save_notify",
+                    "name": "form.buttons.save_notify",
                     "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save and Notify",
@@ -152,7 +152,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": "", "prompt": "Item ID",
                     "type": "TextLine", "required": true,
                     "options": null,
@@ -160,7 +160,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                         "The item id that this option is attached to."
                 },
                 {
-                    "name": "json.widgets.option",
+                    "name": "form.widgets.option",
                     "value": [], "prompt": "Option",
                     "type": "Choice", "required": false,
                     "options": [
@@ -172,7 +172,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "description": "The desired option."
                 },
                 {
-                    "name": "json.buttons.submit",
+                    "name": "form.buttons.submit",
                     "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Submit",
@@ -189,7 +189,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": 2
                 },
                 {
@@ -201,7 +201,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
 
         f = form.ItemForm(self.item, request)
         core.update_json_collection_form(f)
-        self.assertEqual(request.form['json.widgets.item_id'], 2)
+        self.assertEqual(request.form['form.widgets.item_id'], 2)
         self.assertEqual(request.form['form.widgets.name'], 'The Name')
 
     def test_update_json_collection_form_not_fail(self):
@@ -218,19 +218,19 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": "TestItem\\nID"
                 },
                 {
-                    "name": "json.widgets.name",
+                    "name": "form.widgets.name",
                     "value": "A Test Item Name"
                 },
                 {
-                    "name": "json.widgets.description",
+                    "name": "form.widgets.description",
                     "value": "This describes the item."
                 },
                 {
-                    "name": "json.buttons.save",
+                    "name": "form.buttons.save",
                     "value": 1
                 }
             ]
@@ -244,7 +244,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         {
             "data": [
                 {
-                    "name": "json.widgets.item_id",
+                    "name": "form.widgets.item_id",
                     "value": "TestItem\\nID",
                     "prompt": "Item ID",
                     "type": "TextLine", "required": true,
@@ -252,7 +252,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "description": "The unique identifier for this item."
                 },
                 {
-                    "name": "json.widgets.name",
+                    "name": "form.widgets.name",
                     "value": "A Test Item Name",
                     "prompt": "Name",
                     "type": "TextLine", "required": true,
@@ -260,7 +260,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "description": "Name of this item."
                 },
                 {
-                    "name": "json.widgets.description",
+                    "name": "form.widgets.description",
                     "value": "This describes the item.",
                     "type": "TextLine", "required": false,
                     "prompt": "Description",
@@ -268,14 +268,14 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "description": "The description of this item."
                 },
                 {
-                    "name": "json.buttons.save",
+                    "name": "form.buttons.save",
                     "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save",
                     "description": null
                 },
                 {
-                    "name": "json.buttons.save_notify",
+                    "name": "form.buttons.save_notify",
                     "value": null,
                     "type": "Button", "required": false,
                     "prompt": "Save and Notify",
@@ -296,7 +296,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
             "errors": [
                 {
                     "message": "Constraint not satisfied",
-                    "name": "json.widgets.item_id"
+                    "name": "form.widgets.item_id"
                 }
             ]
         }
@@ -317,17 +317,17 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [
                 {
-                    "name": "json.widgets.item_id", "value": "TestItem"
+                    "name": "form.widgets.item_id", "value": "TestItem"
                 },
                 {
-                    "name": "json.widgets.name", "value": "A Test Item Name"
+                    "name": "form.widgets.name", "value": "A Test Item Name"
                 },
                 {
-                    "name": "json.widgets.description",
+                    "name": "form.widgets.description",
                     "value": "This describes the item."
                 },
                 {
-                    "name": "json.buttons.save", "value": 1
+                    "name": "form.buttons.save", "value": 1
                 }
             ]
         }}'''))
