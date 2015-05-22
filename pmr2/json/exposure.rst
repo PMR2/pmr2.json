@@ -194,7 +194,9 @@ results returned in a flat list::
     ... {u'href': u'http://nohost/plone/exposure/3/dir1/nested/file/view',
     ...  u'prompt': u'file', u'rel': u'bookmark'},
     ... {u'href': u'http://nohost/plone/exposure/3/file1/view',
-    ...  u'prompt': u'file1', u'rel': u'bookmark'}]
+    ...  u'prompt': u'file2', u'rel': u'bookmark'},
+    ... {u'href': u'http://nohost/plone/workspace/test',
+    ...  u'prompt': u'Workspace URL', u'rel': u'via'}]
     True
 
 

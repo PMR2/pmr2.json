@@ -62,6 +62,22 @@ class JsonExposureContainerList(JsonCollectionCatalogPage):
 class JsonExposurePage(JsonCollectionCatalogPage):
     portal_type = 'ExposureFile'
 
+    def update(self):
+        super(JsonExposurePage, self).update()
+        helper = zope.component.queryAdapter(self.context,
+            IExposureSourceAdapter)
+
+        if not helper:
+            self._jc_error = {'error': 'could not acquire the workspace for '
+                'this exposure.'}
+            return False
+
+        exposure, workspace, path = helper.source()
+        self._jc_links.append({
+            'rel': 'via',
+            'href': workspace.absolute_url(),
+            'prompt': 'Workspace URL',
+        })
 
 class JsonExposureFilePage(JsonCollectionPage):
 
