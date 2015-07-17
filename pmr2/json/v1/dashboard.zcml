@@ -9,7 +9,7 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       name="pmr2-dashboard"
       class=".dashboard.Dashboard"
-      layer=".interfaces.ISimpleJsonLayer1"
+      layer=".interfaces.IJsonLayer"
       permission="zope2.View"
       />
 

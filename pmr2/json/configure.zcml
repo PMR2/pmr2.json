@@ -8,12 +8,7 @@
   <include package="pmr2.layer"/>
 
   <include package=".v0"/>
-
-  <include file="dashboard.zcml"/>
-  <include file="document.zcml"/>
-  <include file="workspace.zcml"/>
-  <include file="exposure.zcml"/>
-  <include file="topic.zcml"/>
+  <include package=".v1"/>
 
   <!-- General -->
 
@@ -45,7 +40,7 @@
 
   <adapter
       for="zope.schema.interfaces.IList
-           .interfaces.ISimpleJsonLayer"
+           .core.interfaces.IBaseJsonLayer"
       factory=".widget.JsonDataWidgetFactory"
       provides="z3c.form.interfaces.IFieldWidget"
       />

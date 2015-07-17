@@ -10,7 +10,7 @@ from Products.PloneTestCase.layer import onteardown
 
 from pmr2.testing import base
 
-from pmr2.json.interfaces import ISimpleJsonLayer
+from pmr2.json.interfaces import IBaseJsonLayer
 
 
 @onsetup
@@ -32,7 +32,7 @@ ptc.setupPloneSite()
 
 class TestRequest(base.TestRequest):
 
-    zope.interface.implements(ISimpleJsonLayer)
+    zope.interface.implements(IBaseJsonLayer)
 
     def __init__(self, *a, **kw):
         self.stdin = kw.pop('stdin', StringIO())

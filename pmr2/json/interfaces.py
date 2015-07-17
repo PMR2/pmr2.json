@@ -1,25 +1,4 @@
-import zope.interface
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from z3c.form.interfaces import IWidget
-
-from pmr2.app.interfaces import IPMR2AppLayer
-
-
-class ISimpleJsonLayer(IPMR2AppLayer, IDefaultBrowserLayer):
-    """
-    The base simple json layer.
-    """
-
-    # XXX should move this interface to v0
-
-
-class ISimpleJsonLayer1(ISimpleJsonLayer):
-    """
-    Version 1.
-    """
-
-
-class IJsonWidget(IWidget):
-    """
-    Generic JSON widget.
-    """
+from .core.interfaces import IJsonWidget
+from .core.interfaces import IBaseJsonLayer
+from .v0.interfaces import IJsonLayer as ISimpleJsonLayer
+from .v1.interfaces import IJsonLayer as ISimpleJsonLayer1

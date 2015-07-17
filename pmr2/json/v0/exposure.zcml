@@ -12,7 +12,7 @@
       for="pmr2.app.exposure.interfaces.IExposureContainer"
       name="folder_listing"
       class=".exposure.JsonExposureContainerList"
-      layer="..interfaces.ISimpleJsonLayer"
+      layer=".interfaces.IJsonLayer"
       permission="zope2.View"
       />
 
@@ -22,7 +22,7 @@
       for="pmr2.app.exposure.interfaces.IExposure"
       name="wizard"
       class=".exposure.JsonExposureWizardForm"
-      layer="..interfaces.ISimpleJsonLayer"
+      layer=".interfaces.IJsonLayer"
       permission="cmf.ModifyPortalContent"
       />
 
@@ -30,7 +30,7 @@
       for="pmr2.app.exposure.interfaces.IExposure"
       name="exposure_info"
       class=".exposure.JsonExposurePage"
-      layer="..interfaces.ISimpleJsonLayer"
+      layer=".interfaces.IJsonLayer"
       permission="zope2.View"
       />
 
@@ -38,7 +38,7 @@
       for="pmr2.app.exposure.interfaces.IExposureFolder"
       name="exposure_info"
       class=".exposure.JsonExposurePage"
-      layer="..interfaces.ISimpleJsonLayer"
+      layer=".interfaces.IJsonLayer"
       permission="zope2.View"
       />
 
@@ -46,7 +46,7 @@
       for="pmr2.app.exposure.interfaces.IExposureFile"
       name="exposure_file_document_view"
       class=".exposure.JsonExposureFilePage"
-      layer="..interfaces.ISimpleJsonLayer"
+      layer=".interfaces.IJsonLayer"
       permission="zope2.View"
       />
 

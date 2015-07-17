@@ -7,7 +7,7 @@ form::
 
     >>> import json
     >>> from cStringIO import StringIO
-    >>> from pmr2.json.workspace import JsonWorkspaceStorageCreateForm
+    >>> from pmr2.json.v1.workspace import JsonWorkspaceStorageCreateForm
     >>> from pmr2.json.tests.base import TestRequest
     >>> context = self.portal.w.test_user_1_
     >>> request = TestRequest()

@@ -8,7 +8,7 @@ this, start by importing some related modules::
     >>> import json
     >>> import zope.component
     >>> from pmr2.app.exposure.interfaces import IExposureWizard
-    >>> from pmr2.json.exposure import JsonExposureWizardForm
+    >>> from pmr2.json.v1.exposure import JsonExposureWizardForm
     >>> from pmr2.json.tests.base import TestRequest
 
 Instead of dealing with each wizard elements individually, the entire

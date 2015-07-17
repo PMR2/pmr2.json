@@ -17,8 +17,20 @@ def test_suite():
     return unittest.TestSuite([
 
         ztc.ZopeDocFileSuite(
-            'README.rst', package='pmr2.json',
-            test_class=ptc.FunctionalTestCase,
+            'dashboard.rst', package='pmr2.json.v0',
+            test_class=WorkspaceDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        ztc.ZopeDocFileSuite(
+            'exposure.rst', package='pmr2.json.v0',
+            test_class=CompleteDocTestCase,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+        ),
+
+        ztc.ZopeDocFileSuite(
+            'workspace.rst', package='pmr2.json.v0',
+            test_class=WorkspaceDocTestCase,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
         ),
 
