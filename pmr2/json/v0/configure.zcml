@@ -11,6 +11,10 @@
   <include file="workspace.zcml"/>
   <include file="topic.zcml"/>
 
+  <!-- Not really tested but kind of works -->
+
+  <include file="search.zcml"/>
+
   <!-- Legacy package specific definitions -->
 
   <configure zcml:condition="installed pmr2.ricordo"> 

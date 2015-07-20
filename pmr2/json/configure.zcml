@@ -6,27 +6,8 @@
     
   <include package="Products.CMFCore" file="permissions.zcml" />
   <include package="pmr2.layer"/>
-
   <include package=".v0"/>
   <include package=".v1"/>
-
-  <!-- General -->
-
-  <browser:view
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      name="pmr2_json_search"
-      class=".search.JsonSearchPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
-
-  <browser:view
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      name="search"
-      class=".search.JsonSearchPage"
-      layer=".interfaces.ISimpleJsonLayer"
-      permission="zope2.View"
-      />
 
   <!-- The layer applier -->
 

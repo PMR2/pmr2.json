@@ -1,0 +1,24 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="pmr2.json">
+
+  <!-- General -->
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="pmr2_json_search"
+      class=".search.JsonSearchPage"
+      layer=".interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:view
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      name="search"
+      class=".search.JsonSearchPage"
+      layer=".interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+</configure>
