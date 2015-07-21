@@ -36,7 +36,7 @@ class JsonExposureContainerList(JsonCollectionItemCatalogPage):
                 'href': view_url(self.context, i),
                 'data': [{
                     'name': 'title',
-                    'value': self.context.title,
+                    'value': i.Title,
                     'prompt': 'Title',
                 }],
             }
