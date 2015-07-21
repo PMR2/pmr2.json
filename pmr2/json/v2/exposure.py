@@ -61,4 +61,5 @@ class JsonAllExposureContainerList(JsonExposureContainerList):
         return {
             'portal_type': self.portal_type,
             'sort_on': 'sortable_title',
+            'pmr2_review_state': 'published',
         }
