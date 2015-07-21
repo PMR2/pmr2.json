@@ -117,13 +117,17 @@ class JsonCollectionPage(JsonPage):
 
 
 class JsonCollectionCatalogPage(JsonCollectionPage):
+    """
+    Basic presentation of a catalog listing as links with the bookmark
+    relationship.  This is the most basic and generic form, it makes no
+    guarantees as to the linked data will be in the same Collection+JSON
+    format.
+    """
 
     portal_type = None
 
-    def update(self):
-        catalog = getToolByName(self.context, 'portal_catalog')
-
-        query = {
+    def make_query(self):
+        return {
             'portal_type': self.portal_type,
             'path': [
                 u'/'.join(self.context.getPhysicalPath()),
@@ -131,7 +135,13 @@ class JsonCollectionCatalogPage(JsonCollectionPage):
             'sort_on': 'sortable_title',
         }
 
-        results = catalog(**query)
+    def catalog(self, query):
+        return self._catalog(**query)
+
+    def update_jc(self, results):
+        """
+        Takes a catalog result to populate the self._jc_ attributes.
+        """
 
         self._jc_links = [
             {
@@ -140,3 +150,33 @@ class JsonCollectionCatalogPage(JsonCollectionPage):
                 'prompt': i.Title,
             } for i in results
         ]
+
+    def update(self):
+        self._catalog = getToolByName(self.context, 'portal_catalog')
+        query = self.make_query()
+        results = self.catalog(query)
+        self.update_jc(results)
+
+
+class JsonCollectionItemCatalogPage(JsonCollectionCatalogPage):
+    """
+    This presents the items returned as a list of items, which may be
+    used to retrieve a Collection+JSON document, which implies the
+    targeted link MUST have a Collection+JSON view.
+    """
+
+    def update_jc(self, results):
+        """
+        Instead of doing them as links these are items.  The linked
+        items MUST be able to provided a Collection+JSON view.
+        """
+
+        self._jc_items = [{
+            'href': view_url(self.context, i),
+            'data': [{
+                'name': 'title',
+                'value': self.context.title,
+                'prompt': 'Title',
+            }],
+        } for i in results]
+
