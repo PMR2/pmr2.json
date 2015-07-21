@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pmr2.json">
+    
+  <!-- ExposureContainer -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureContainer"
+      name="folder_listing"
+      class=".exposure.JsonExposureContainerList"
+      layer=".interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="Products.ATContentTypes.interfaces.topic.IATTopic"
+      name="pmr1_folder_listing"
+      class=".exposure.JsonAllExposureContainerList"
+      layer=".interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+</configure>

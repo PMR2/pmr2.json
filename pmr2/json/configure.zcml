@@ -8,6 +8,7 @@
   <include package="pmr2.layer"/>
   <include package=".v0"/>
   <include package=".v1"/>
+  <include package=".v2"/>
 
   <!-- The layer applier -->
 
