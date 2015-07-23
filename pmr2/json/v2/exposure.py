@@ -39,13 +39,13 @@ class JsonExposureContainerList(JsonCollectionItemCatalogPage):
                     'value': i.Title,
                     'prompt': 'Title',
                 }],
+                'links': [{
+                    'href': portal_url +
+                        i.pmr2_exposure_workspace.replace(portal_path, ''),
+                    'rel': 'source',
+                    'prompt': 'Workspace',
+                }],
             }
-            item['links'] = [{
-                'href': portal_url +
-                    i.pmr2_exposure_workspace.replace(portal_path, ''),
-                'rel': 'source',
-                'prompt': 'Workspace',
-            }]
 
             self._jc_items.append(item)
 
