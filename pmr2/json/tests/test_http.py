@@ -50,6 +50,19 @@ class AcceptHeaderTestCase(unittest.TestCase):
             ('*/*', '1', {}),
         ])
 
+    def test_14_1_mix_final(self):
+        # RFC2616 14.1, final mixture example
+        self.assertEqual(http.parse_accept(
+            'text/*;q=0.3, text/html;q=0.7, text/html;level=1,'
+            'text/html;level=2;q=0.4, */*;q=0.5'
+        ), [
+            ('text/html', '1', {'level': '1'}),
+            ('text/html', '0.7', {}),
+            ('*/*', '0.5', {}),
+            ('text/html', '0.4', {'level': '2'}),
+            ('text/*', '0.3', {}),
+        ])
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
