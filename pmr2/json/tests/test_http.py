@@ -69,10 +69,3 @@ def test_suite():
     suite = TestSuite()
     suite.addTest(makeSuite(AcceptHeaderTestCase))
     return suite
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(AcceptHeaderTestCase))
-    return suite
