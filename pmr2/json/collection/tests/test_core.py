@@ -40,7 +40,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         tearDown(self)
 
     def test_base_render(self):
-        f = form.ItemBaseForm(self.item, self.request)
+        f = form.ItemFormJsonBase(self.item, self.request)
         f.update()
 
         result = core.formfields_to_collection_template(f)

@@ -8,12 +8,17 @@ from .interfaces import IOption
 from pmr2.json.collection.mixin import JsonCollectionFormMixin
 
 
-class ItemBaseForm(JsonCollectionFormMixin, form.Form):
+class ItemFormBase(form.Form):
 
+    ignoreContext = True
     fields = field.Fields(IItem)
 
 
-class ItemForm(ItemBaseForm):
+class ItemFormJsonBase(JsonCollectionFormMixin, ItemFormBase):
+    pass
+
+
+class ItemFormStd(ItemFormBase):
 
     @button.buttonAndHandler(u'Save', name='save')
     def save(self, action):
@@ -28,6 +33,10 @@ class ItemForm(ItemBaseForm):
     @button.buttonAndHandler(u'Save and Notify', name='save_notify')
     def save_notify(self, action):
         pass
+
+
+class ItemForm(JsonCollectionFormMixin, ItemFormStd):
+    pass
 
 
 class OptionBaseForm(JsonCollectionFormMixin, form.Form):
