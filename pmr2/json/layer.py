@@ -8,6 +8,28 @@ from pmr2.json import v2
 
 # ordered in precedence.
 
+class NotAcceptableError(TypeError):
+    """HTTP 406 Not Acceptable"""
+
+
+def response_mime_type(media_type, params):
+    """
+    Reconstitute the media type
+    """
+
+    if media_type != 'application/vnd.physiome.pmr2.json.1':
+        return media_type
+    version = params.get('version')
+    if not version:
+        return media_type
+
+    return '%s; version=%s' % (media_type, version)
+
+def set_content_type(request, default=None):
+    mimetype = getattr(request, '_pmr2_json_layer_content_type_', default)
+    if mimetype:
+        request.response.setHeader('Content-Type', mimetype)
+
 def handle_ignore(params):
     # For types that should have matched other things
     # XXX probably this needs a common registry to properly work?
@@ -25,7 +47,10 @@ def handle_v1(params, default='1'):
     version = params.get('version', default)
     # If a version requested falls outside of requested range, default
     # to version 1 for now.
-    return version_table.get(version, v1.interfaces.IJsonLayer)
+    result = version_table.get(version)
+    if not result:
+        raise NotAcceptableError
+    return result
 
 layer_functions = {
     'text/html': handle_ignore,
@@ -35,6 +60,8 @@ layer_functions = {
     'application/vnd.physiome.pmr2.json.1': handle_v1,
     'application/json': handle_v1,
     'application/vnd.collection+json': handle_v1,
+    # XXX this is VERY temporary while awaiting OpenCOR to migrate away
+    # from the usage of this brief introduction.
     'application/vnd.physiome.pmr2.json.2':
         lambda params: handle_v1(params, '2'),
 }
@@ -53,4 +80,21 @@ class SimpleJsonLayerApplier(LayerApplierBase):
             if not media_type.type in layer_functions:
                 continue
             type_, q, params = media_type
-            return layer_functions[type_](params)
+            try:
+                result = layer_functions[type_](params)
+                if result:
+                    # set content-type header
+                    # XXX I am not sure whether setting that directly
+                    # here will result in other side-effects (such as
+                    # unintentionally overriding other processes/methods
+                    # of doing so in other libraries).  So just in case,
+                    # while it is possible we only just simply assign it
+                    # to a "private" attribute which views will have to
+                    # handle the actual setting sepearate.
+                    request._pmr2_json_layer_content_type_ = \
+                        response_mime_type(type_, params)
+                return result
+            except NotAcceptableError:
+                # XXX tag
+                request.response.setStatus(406, 'Not Acceptable')
+                return None
