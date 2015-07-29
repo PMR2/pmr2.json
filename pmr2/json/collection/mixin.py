@@ -15,6 +15,7 @@ from pmr2.json.collection.core import view_url
 
 from pmr2.json.collection.core import json_collection_view_init
 from pmr2.json.collection.core import json_collection_view_render
+from pmr2.json.layer import set_content_type
 
 
 @implementer(ISimpleJsonLayer1)
@@ -59,9 +60,7 @@ class JsonCollectionFormMixin(Form):
         If something is, return appropriate error or success message.
         """
 
-        # XXX this is a naive implementation
-        # The idea is to capture the widget values and render them.
-        self.request.response.setHeader('Content-Type', self.json_mimetype)
+        set_content_type(self.request, self.json_mimetype)
         return json_collection_view_render(self)
 
     def extractData(self, *a, **kw):

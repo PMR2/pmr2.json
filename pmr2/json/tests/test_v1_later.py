@@ -1,5 +1,6 @@
 import unittest
 import json
+from urllib2 import HTTPError
 
 from plone.testing.z2 import Browser
 
@@ -26,6 +27,16 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
     def test_base_render(self):
         self.testbrowser.open(self.portal_url + '/item_form')
         self.assertIn('<input', self.testbrowser.contents)
+        self.testbrowser.open(self.portal_url + '/item_form_html_only')
+        self.assertIn('<input', self.testbrowser.contents)
+
+    def test_assigned_but_html_only(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1')
+        self.testbrowser.open(self.portal_url + '/item_form_html_only')
+        self.assertIn('<input', self.testbrowser.contents)
+        self.assertTrue(self.testbrowser.headers['Content-Type'].startswith(
+            'text/html'))
 
     def test_format_0_fail(self):
         self.testbrowser.addHeader('Accept',
@@ -44,6 +55,38 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertTrue(isinstance(results, dict))
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/vnd.physiome.pmr2.json.1')
+
+    def test_format_0_base_as_json(self):
+        self.testbrowser.addHeader('Accept', 'application/json')
+        self.testbrowser.open(self.portal_url + '/item_form')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/json')
+
+    def test_format_0_version1(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1; version=1')
+        self.testbrowser.open(self.portal_url + '/item_form')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.1; version=1')
+
+    def test_format_0_version2(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1; version=2')
+        self.testbrowser.open(self.portal_url + '/item_form')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.1; version=2')
+
+    def test_format_0_version3(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1; version=3')
+        self.assertRaises(HTTPError,
+            self.testbrowser.open, self.portal_url + '/item_form')
 
 
 def test_suite():

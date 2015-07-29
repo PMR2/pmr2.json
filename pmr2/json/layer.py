@@ -53,6 +53,7 @@ def handle_v1(params, default='1'):
     return result
 
 layer_functions = {
+    '*/*': handle_ignore,
     'text/html': handle_ignore,
     'application/xhtml+xml': handle_ignore,
     'application/xml': handle_ignore,
@@ -95,6 +96,10 @@ class SimpleJsonLayerApplier(LayerApplierBase):
                         response_mime_type(type_, params)
                 return result
             except NotAcceptableError:
-                # XXX tag
-                request.response.setStatus(406, 'Not Acceptable')
-                return None
+                if len(media_types) == 1:
+                    # XXX if there are _any_ other media types this
+                    # cannot assert that there are NO other possible
+                    # handlers for content-type.  So only send this iff
+                    # there is only one media_type specified.
+                    request.response.setStatus(406, 'Not Acceptable')
+                continue

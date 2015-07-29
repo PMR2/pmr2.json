@@ -5,6 +5,13 @@
 
   <browser:page
       for="*"
+      name="item_form_html_only"
+      class="pmr2.json.collection.testing.form.ItemFormStd"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
       name="item_form"
       class="pmr2.json.collection.testing.form.ItemFormStd"
       permission="zope2.View"

@@ -80,6 +80,16 @@ class LayerTestCase(unittest.TestCase):
         self.assertFalse(hasattr(request, '_pmr2_json_layer_content_type_'))
         self.assertEqual(request.response.getStatus(), 406)
 
+    def test_apply_v1_version3_fallback(self):
+        request = make_request({'HTTP_ACCEPT':
+            'application/vnd.physiome.pmr2.json.1;version=3,'
+            'application/vnd.physiome.pmr2.json.1;version=2;q=0.9'
+            })
+        result = self.applier(request)
+        self.assertEqual(result, v2.interfaces.IJsonLayer)
+        self.assertEqual(request._pmr2_json_layer_content_type_,
+            'application/vnd.physiome.pmr2.json.1; version=2')
+
     def test_apply_json(self):
         request = make_request(
             {'HTTP_ACCEPT': 'application/json'})

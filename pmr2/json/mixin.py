@@ -9,6 +9,8 @@ from pmr2.z3cform.page import SimplePage
 from pmr2.json.interfaces import ISimpleJsonLayer
 from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
+from pmr2.json.layer import set_content_type
+
 
 class JsonPage(SimplePage):
     """
@@ -25,7 +27,7 @@ class JsonPage(SimplePage):
         return json.dumps(obj, indent=self.indent)
 
     def __call__(self):
-        self.request.response.setHeader('Content-Type', self.json_mimetype)
+        set_content_type(self.request, self.json_mimetype)
         return super(JsonPage, self).__call__()
 
 
@@ -84,9 +86,7 @@ class SimpleJsonFormMixin(BaseForm):
         If something is, return appropriate error or success message.
         """
 
-        # XXX this is a naive implementation
-        # The idea is to capture the widget values and render them.
-        self.request.response.setHeader('Content-Type', self.json_mimetype)
+        set_content_type(self.request, self.json_mimetype)
         return json.dumps(self.json_faa)
 
 
