@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+  <browser:page
+      for="*"
+      name="item_form"
+      class="pmr2.json.collection.testing.form.ItemFormStd"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
+      name="item_form"
+      class="pmr2.json.collection.testing.form.ItemForm"
+      layer="pmr2.json.v1.interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
+</configure>
