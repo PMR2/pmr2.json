@@ -42,12 +42,34 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.0')
         self.testbrowser.open(self.portal_url + '/item_form')
-        # XXX The fallback behavior needs to be supported until all
-        # forms have the .1 format implemented.
-        # XXX uncomment below when ready.
-        # self.assertRaises(ValueError, json.loads, self.testbrowser.contents)
+        self.assertRaises(ValueError, json.loads, self.testbrowser.contents)
 
-    def test_format_0_base(self):
+    def test_format_0_unassigned(self):
+        self.testbrowser.open(self.portal_url + '/page_v0_only')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.0')
+
+    def test_format_0_assigned(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.0')
+        self.testbrowser.open(self.portal_url + '/page_v0_only')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.0')
+
+    def test_format_0_request_as_1_fail(self):
+        return
+        # XXX this is currently not possible as it is impossible to
+        # make aware of this lack of content-type support...
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1')
+        self.assertRaises(HTTPError,
+            self.testbrowser.open, self.portal_url + '/page_v0_only')
+
+    def test_format_1_base(self):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.1')
         self.testbrowser.open(self.portal_url + '/item_form')
@@ -56,7 +78,7 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/vnd.physiome.pmr2.json.1')
 
-    def test_format_0_base_as_json(self):
+    def test_format_1_base_as_json(self):
         self.testbrowser.addHeader('Accept', 'application/json')
         self.testbrowser.open(self.portal_url + '/item_form')
         results = json.loads(self.testbrowser.contents)
@@ -64,7 +86,7 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/json')
 
-    def test_format_0_version1(self):
+    def test_format_1_version1(self):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.1; version=1')
         self.testbrowser.open(self.portal_url + '/item_form')
@@ -73,7 +95,7 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/vnd.physiome.pmr2.json.1; version=1')
 
-    def test_format_0_version2(self):
+    def test_format_1_version2(self):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.1; version=2')
         self.testbrowser.open(self.portal_url + '/item_form')
@@ -82,7 +104,7 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/vnd.physiome.pmr2.json.1; version=2')
 
-    def test_format_0_version3(self):
+    def test_format_1_version3(self):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.1; version=3')
         self.assertRaises(HTTPError,
