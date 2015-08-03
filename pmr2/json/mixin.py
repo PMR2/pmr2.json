@@ -27,8 +27,8 @@ class JsonPage(SimplePage):
         return json.dumps(obj, indent=self.indent)
 
     def __call__(self):
-        set_content_type(self.request, self.json_mimetype)
-        return super(JsonPage, self).__call__()
+        if set_content_type(self.request, self.json_mimetype):
+            return super(JsonPage, self).__call__()
 
 
 class JsonListingBasePage(JsonPage):
@@ -86,8 +86,11 @@ class SimpleJsonFormMixin(BaseForm):
         If something is, return appropriate error or success message.
         """
 
-        set_content_type(self.request, self.json_mimetype)
         return json.dumps(self.json_faa)
+
+    def __call__(self):
+        if set_content_type(self.request, self.json_mimetype):
+            return super(SimpleJsonFormMixin, self).__call__()
 
 
 class SimpleJsonAddFormMixin(SimpleJsonFormMixin):

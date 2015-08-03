@@ -6,6 +6,10 @@ from pmr2.json import v0
 from pmr2.json import v1
 from pmr2.json import v2
 
+
+MIMETYPE_CORE = 'application/vnd.physiome.pmr2.json.'
+REQUEST_MARKER_KEY = '_pmr2_json_layer_marker_'
+
 # ordered in precedence.
 
 class NotAcceptableError(TypeError):
@@ -26,14 +30,44 @@ def response_mime_type(media_type, params):
     return '%s; version=%s' % (media_type, version)
 
 def set_content_type(request, default=None):
-    mimetype = getattr(request, '_pmr2_json_layer_content_type_', default)
-    if mimetype:
-        request.response.setHeader('Content-Type', mimetype)
+    # XXX this only checks and sets a parameterless mimetype.
+
+    content_mimetypes, count = getattr(request, REQUEST_MARKER_KEY, (None, 0))
+
+    if not content_mimetypes:
+        if default:
+            request.response.setHeader('Content-Type', default)
+        return True
+
+    if not default:
+        if content_mimetypes:
+            request.response.setHeader('Content-Type', content_mimetypes[0])
+            return True
+
+    # This filters out anything that we cannot check but implied.
+    provided = [mt for mt in content_mimetypes if mt.startswith(MIMETYPE_CORE)]
+    if not provided:
+        # we can't do the strict checking as the auxilary accepted types
+        # are provided which we accept. Simply return that.
+        request.response.setHeader('Content-Type', content_mimetypes[0])
+        return True
+
+    defaults = [mt for mt in provided if mt.startswith(default)]
+
+    if defaults:
+        # The default mimetype is accepted, return the requested one
+        # via the accept header that closest match with default.
+        request.response.setHeader('Content-Type', defaults[0])
+        return True
+
+    # We got nothing.
+    request.response.setStatus(406, 'Not Acceptable')
+    return False
 
 def handle_ignore(params):
     # For types that should have matched other things
     # XXX probably this needs a common registry to properly work?
-    return None
+    return False
 
 def handle_v0(params):
     return v0.interfaces.IJsonLayer
@@ -77,6 +111,8 @@ class SimpleJsonLayerApplier(LayerApplierBase):
             return
 
         media_types = parse_accept(accept)
+        results = []
+        response_mime_types = []
         for media_type in media_types:
             if not media_type.type in layer_functions:
                 continue
@@ -92,9 +128,17 @@ class SimpleJsonLayerApplier(LayerApplierBase):
                     # while it is possible we only just simply assign it
                     # to a "private" attribute which views will have to
                     # handle the actual setting sepearate.
-                    request._pmr2_json_layer_content_type_ = \
-                        response_mime_type(type_, params)
-                return result
+                    # XXX this variable should only be used in this
+                    # module.
+                    response_mime_types.append(
+                        response_mime_type(type_, params))
+                    results.append(result)
+                if result is False:
+                    # We have a guaranteed ignore.
+                    if not results:
+                        # Really ignoring as the request has nothing
+                        # we can handle with a higher precedence.
+                        return
             except NotAcceptableError:
                 if len(media_types) == 1:
                     # XXX if there are _any_ other media types this
@@ -103,3 +147,8 @@ class SimpleJsonLayerApplier(LayerApplierBase):
                     # there is only one media_type specified.
                     request.response.setStatus(406, 'Not Acceptable')
                 continue
+
+        if response_mime_types:
+            setattr(request, REQUEST_MARKER_KEY,
+                (response_mime_types, len(media_types)))
+        return results

@@ -17,6 +17,25 @@
       permission="zope2.View"
       />
 
+  <!--
+    It does not matter that the json view mismatch with html view as
+    this is to replicate the mimetype based tests.
+  -->
+  <browser:page
+      for="*"
+      name="page_v0_mix"
+      class="pmr2.json.collection.testing.form.ItemFormStd"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
+      name="page_v0_mix"
+      class="pmr2.json.testing.view.DummyJsonPage"
+      layer="pmr2.json.v0.interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
   <browser:page
       for="*"
       name="item_form"

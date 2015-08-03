@@ -35,49 +35,51 @@ class LayerTestCase(unittest.TestCase):
         request = make_request({'HTTP_ACCEPT':
             'application/vnd.physiome.pmr2.json.0'})
         result = self.applier(request)
-        self.assertEqual(result, v0.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.0')
+        self.assertEqual(result, [v0.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.0'], 1))
 
     def test_apply_v1(self):
         request = make_request({'HTTP_ACCEPT':
             'application/vnd.physiome.pmr2.json.1'})
         result = self.applier(request)
-        self.assertEqual(result, v1.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.1')
+        self.assertEqual(result, [v1.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.1'], 1))
 
     def test_apply_v2(self):
         # XXX to be removed
         request = make_request({'HTTP_ACCEPT':
             'application/vnd.physiome.pmr2.json.2'})
         result = self.applier(request)
-        self.assertEqual(result, v2.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.2')
+        self.assertEqual(result, [v2.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.2'], 1))
 
     def test_apply_v1_version2(self):
         request = make_request({'HTTP_ACCEPT':
             'application/vnd.physiome.pmr2.json.1;version=2'})
         result = self.applier(request)
-        self.assertEqual(result, v2.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.1; version=2')
+        self.assertEqual(result, [v2.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.1; version=2'], 1))
 
         request = make_request({'HTTP_ACCEPT':
             'application/json;q=0.1,'
             'application/vnd.physiome.pmr2.json.1;version=2'})
         result = self.applier(request)
-        self.assertEqual(result, v2.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.1; version=2')
+        self.assertEqual(result,
+            [v2.interfaces.IJsonLayer, v1.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.1; version=2',
+                'application/json'], 2))
 
     def test_apply_v1_version3(self):
         request = make_request({'HTTP_ACCEPT':
             'application/vnd.physiome.pmr2.json.1;version=3'})
         result = self.applier(request)
-        self.assertNotEqual(result, v2.interfaces.IJsonLayer)
-        self.assertFalse(hasattr(request, '_pmr2_json_layer_content_type_'))
+        self.assertNotEqual(result, [v2.interfaces.IJsonLayer])
+        self.assertFalse(hasattr(request, '_pmr2_json_layer_marker_'))
         self.assertEqual(request.response.getStatus(), 406)
 
     def test_apply_v1_version3_fallback(self):
@@ -86,23 +88,23 @@ class LayerTestCase(unittest.TestCase):
             'application/vnd.physiome.pmr2.json.1;version=2;q=0.9'
             })
         result = self.applier(request)
-        self.assertEqual(result, v2.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.physiome.pmr2.json.1; version=2')
+        self.assertEqual(result, [v2.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.physiome.pmr2.json.1; version=2'], 2))
 
     def test_apply_json(self):
         request = make_request(
             {'HTTP_ACCEPT': 'application/json'})
         result = self.applier(request)
-        self.assertEqual(result, v1.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/json')
+        self.assertEqual(result, [v1.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/json'], 1))
         request = make_request(
             {'HTTP_ACCEPT': 'application/vnd.collection+json'})
         result = self.applier(request)
-        self.assertEqual(result, v1.interfaces.IJsonLayer)
-        self.assertEqual(request._pmr2_json_layer_content_type_,
-            'application/vnd.collection+json')
+        self.assertEqual(result, [v1.interfaces.IJsonLayer])
+        self.assertEqual(request._pmr2_json_layer_marker_,
+            (['application/vnd.collection+json'], 1))
 
     def test_xml_prime(self):
         result = self.applier(self.xml_request)

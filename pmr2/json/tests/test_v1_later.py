@@ -60,14 +60,48 @@ class PhysiomePmr2Json1VersioningTestCase(unittest.TestCase):
         self.assertEqual(self.testbrowser.headers['Content-Type'],
             'application/vnd.physiome.pmr2.json.0')
 
-    def test_format_0_request_as_1_fail(self):
-        return
-        # XXX this is currently not possible as it is impossible to
-        # make aware of this lack of content-type support...
+    def test_format_0_only_view_requested_as_1_fail(self):
         self.testbrowser.addHeader('Accept',
             'application/vnd.physiome.pmr2.json.1')
         self.assertRaises(HTTPError,
             self.testbrowser.open, self.portal_url + '/page_v0_only')
+
+    def test_format_0_mix_view_request_as_0_success_attempt(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.0')
+        self.testbrowser.open(self.portal_url + '/page_v0_mix')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.0')
+
+    def test_format_0_request_as_1_fail_attempt(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1')
+        #self.testbrowser.open(self.portal_url + '/page_v0_mix')
+        #import pdb;pdb.set_trace()
+        self.assertRaises(HTTPError,
+            self.testbrowser.open, self.portal_url + '/page_v0_only')
+
+    def test_format_0_request_as_1_and_0_success(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.0,'
+            'application/vnd.physiome.pmr2.json.1')
+        self.testbrowser.open(self.portal_url + '/page_v0_mix')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.0')
+
+    def test_format_0_request_as_1_and_0_success_reversed(self):
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1,'
+            'application/vnd.physiome.pmr2.json.0')
+        self.testbrowser.open(self.portal_url + '/page_v0_mix')
+        results = json.loads(self.testbrowser.contents)
+        self.assertTrue(isinstance(results, dict))
+        self.assertEqual(self.testbrowser.headers['Content-Type'],
+            'application/vnd.physiome.pmr2.json.0')
 
     def test_format_1_base(self):
         self.testbrowser.addHeader('Accept',

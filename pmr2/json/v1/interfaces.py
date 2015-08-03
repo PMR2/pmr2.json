@@ -1,7 +1,7 @@
-from ..v0 import interfaces
+from ..core.interfaces import IBaseJsonLayer
 
 
-class IJsonLayer(interfaces.IJsonLayer):
+class IJsonLayer(IBaseJsonLayer):
     """
     Version 1.
     """

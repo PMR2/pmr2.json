@@ -60,7 +60,6 @@ class JsonCollectionFormMixin(Form):
         If something is, return appropriate error or success message.
         """
 
-        set_content_type(self.request, self.json_mimetype)
         return json_collection_view_render(self)
 
     def extractData(self, *a, **kw):
@@ -80,6 +79,10 @@ class JsonCollectionFormMixin(Form):
                 'errors': errors,
             }
         return result
+
+    def __call__(self):
+        if set_content_type(self.request, self.json_mimetype):
+            return super(JsonCollectionFormMixin, self).__call__()
 
 
 class JsonCollectionAddFormMixin(JsonCollectionFormMixin):
