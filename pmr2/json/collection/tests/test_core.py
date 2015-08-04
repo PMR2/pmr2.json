@@ -353,6 +353,61 @@ class CollectionsUtilsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, core.generate_collection,
             href='http://www.example.com/', wrongarg='foo')
 
+    def test_keyvalue_to_itemdata(self):
+        value = {
+            'foo': 'bar',
+            'key': 'value',
+        }
+
+        result = core.keyvalue_to_itemdata(value)
+        self.assertEqual(result, {'data': [
+            {
+                'name': 'foo',
+                'value': 'bar',
+            },
+            {
+                'name': 'key',
+                'value': 'value',
+            }
+        ]})
+
+        self.assertEqual(core.keyvalue_to_itemdata({}), {'data': []})
+
+    def test_keyvalue_to_links(self):
+        value = {
+            'foo': 'http://foo.example.com/',
+            'key': 'http://key.example.com/',
+        }
+
+        result = core.keyvalue_to_links(value)
+        self.assertEqual(result, [
+            {
+                'href': 'http://foo.example.com/',
+                'prompt': 'foo',
+                'rel': 'bookmark',
+            },
+            {
+                'href': 'http://key.example.com/',
+                'prompt': 'key',
+                'rel': 'bookmark',
+            }
+        ])
+
+        self.assertEqual(core.keyvalue_to_links({}), [])
+
+    def test_keyvalue_to_links_params(self):
+        value = {'target': 'http://example.com/target'}
+
+        result = core.keyvalue_to_links(value, rel='alternative')
+        self.assertEqual(result, [
+            {
+                'href': 'http://example.com/target',
+                'prompt': 'target',
+                'rel': 'alternative',
+            },
+        ])
+
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -1,7 +1,5 @@
 import json
 
-from Products.CMFCore.utils import getToolByName
-
 from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 
@@ -37,6 +35,31 @@ def generate_collection(version='1.0', href=None, links=None, items=None,
     return {
         'collection': {key: kw[key] for key in keys if kw.get(key) is not None}
     }
+
+def keyvalue_to_itemdata(item_dict):
+    """
+    Convert a simple item_dict in the key:value format to the collection
+    item format.
+    """
+
+    return {'data':
+        [{
+            'name': k,
+            'value': v,
+        } for k, v in item_dict.iteritems()]
+    }
+
+def keyvalue_to_links(item_dict, rel='bookmark'):
+    """
+    Convert a simple item_dict in the key:links format to the collection
+    links format.
+    """
+
+    return [{
+        'prompt': k,
+        'href': v,
+        'rel': rel,
+    } for k, v in item_dict.iteritems()]
 
 def json_collection_view_init(view):
     view._jc_links = None
