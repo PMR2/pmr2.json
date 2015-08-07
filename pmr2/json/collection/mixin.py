@@ -94,18 +94,6 @@ class JsonCollectionAddFormMixin(JsonCollectionFormMixin):
         return super(JsonCollectionAddFormMixin, self).render()
 
 
-class JsonHalPage(JsonPage):
-
-    json_mimetype = 'application/vnd.physiome.pmr2.json.1'
-
-    def __init__(self, context, request):
-        super(JsonCollectionPage, self).__init__(context, request)
-        self.links = []
-
-    def render(self):
-        return self.dumps(generate_hal(self.links, data=self.data))
-
-
 class JsonCollectionPage(JsonPage):
 
     json_mimetype = 'application/vnd.physiome.pmr2.json.1'
