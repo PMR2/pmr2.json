@@ -8,6 +8,7 @@
   <include file="document.zcml"/>
   <include file="workspace.zcml"/>
   <include file="exposure.zcml"/>
+  <include file="search.zcml"/>
   <include file="topic.zcml"/>
 
 </configure>
