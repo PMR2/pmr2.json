@@ -185,6 +185,26 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
         self.assertEqual(result, answer)
         self.assertEqual(result, f._jc_template)
 
+    def test_template_data_to_dict(self):
+        request = TestRequest(stdin=StringIO('''{ "template": {
+            "data": [
+                {
+                    "name": "item_id",
+                    "value": 2
+                },
+                {
+                    "name": "name",
+                    "value": "The Name"
+                }
+            ]
+        }}'''))
+
+        result = core.request_template_to_dict(request)
+        self.assertEqual(result, {
+            'item_id': 2,
+            'name': 'The Name',
+        })
+
     def test_update_json_collection_form(self):
         request = TestRequest(stdin=StringIO('''{ "template": {
             "data": [

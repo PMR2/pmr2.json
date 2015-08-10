@@ -22,10 +22,14 @@ def generate_hal(links, data=None):
         result.update(data)
     return result
 
-def template_to_request(template, request):
+def template_to_dict(template):
     data = template.get('data', [])
+    result = {}
     for d in data:
-        request.form[d.get('name', '')] = d.get('value')
+        if d.get('name') is None:
+            continue
+        result[d['name']] = d.get('value')
+    return result
 
 def generate_collection(version='1.0', href=None, links=None, items=None,
         queries=None, template=None, error=None):
@@ -83,18 +87,19 @@ def json_collection_view_render(view):
         error=view._jc_error,
     ))
 
-def update_json_collection_form(form):
-    obj = extractRequestObj(form.request)
+def request_template_to_dict(request):
+    obj = extractRequestObj(request)
 
     if not isinstance(obj, dict):
-        # Should probably just check whether the object is a valid
+        # Should probably also check whether the object is a valid
         # collection.
-        return
+        return {}
 
-    # XXX need to revisit this, for support multiple submissions?
     template = obj.get('template', {})
+    return template_to_dict(template)
 
-    template_to_request(template, form.request)
+def update_json_collection_form(form):
+    form.request.form.update(request_template_to_dict(form.request))
 
 def _append_form_widgets(data, form):
     if not form.widgets:
