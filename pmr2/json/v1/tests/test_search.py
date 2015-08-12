@@ -10,6 +10,7 @@ from plone.app.testing import login
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
+from plone.testing.z2 import Browser
 
 from pmr2.json.v1 import search
 from pmr2.json.testing import layer
@@ -26,6 +27,7 @@ class SearchTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = TestRequest()
+        self.testbrowser = Browser(self.portal)
 
     def test_base_render(self):
         f = search.JsonSearchPage(self.portal, self.request)
@@ -168,6 +170,12 @@ class SearchTestCase(unittest.TestCase):
         import transaction
         transaction.commit()
 
+        answer['collection']['href'] = 'http://nohost/plone/search'
+
+        self.testbrowser.addHeader('Accept',
+            'application/vnd.physiome.pmr2.json.1')
+        self.testbrowser.open('http://nohost/plone/search')
+        self.assertEqual(json.loads(self.testbrowser.contents), answer)
 
         request = TestRequest()
         request.stdin = StringIO(json.dumps({'template': {
@@ -186,6 +194,12 @@ class SearchTestCase(unittest.TestCase):
             'rel': u'bookmark'
         }]
         self.assertEqual(results['collection']['links'], links)
+
+        self.testbrowser.open('http://nohost/plone/search',
+            data=request.stdin.getvalue())
+        self.assertEqual(
+            json.loads(self.testbrowser.contents)['collection']['links'],
+            links)
 
 
 def test_suite():
