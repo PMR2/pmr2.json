@@ -28,6 +28,9 @@ class SearchTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = TestRequest()
         self.testbrowser = Browser(self.portal)
+        # XXX manually cleaning up pollution not cleaned by zope/plone
+        # test layer framework when executed with other tests.
+        self.portal.portal_catalog.manage_catalogClear()
 
     def test_base_render(self):
         f = search.JsonSearchPage(self.portal, self.request)
