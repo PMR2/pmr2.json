@@ -125,9 +125,7 @@ class SearchTestCase(unittest.TestCase):
 
         setRoles(portal, TEST_USER_ID, ['Member'])
 
-        f = search.JsonSearchPage(self.portal, self.request)
-        results = json.loads(f())
-        self.assertEqual(results,  {'collection': {
+        answer = {'collection': {
             'version': '1.0',
             'template': [
                 {
@@ -161,7 +159,15 @@ class SearchTestCase(unittest.TestCase):
                     ],
                 },
             ],
-        }})
+        }}
+
+        f = search.JsonSearchPage(self.portal, self.request)
+        results = json.loads(f())
+        self.assertEqual(results, answer)
+
+        import transaction
+        transaction.commit()
+
 
         request = TestRequest()
         request.stdin = StringIO(json.dumps({'template': {
@@ -174,11 +180,12 @@ class SearchTestCase(unittest.TestCase):
         }}))
         f = search.JsonSearchPage(self.portal, request)
         results = json.loads(f())
-        self.assertEqual(results['collection']['links'], [{
+        links = [{
             'href': u'http://nohost/plone/testpage',
             'prompt': u'Test Page',
             'rel': u'bookmark'
-        }])
+        }]
+        self.assertEqual(results['collection']['links'], links)
 
 
 def test_suite():

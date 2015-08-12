@@ -1,3 +1,4 @@
+from plone.testing.z2 import FUNCTIONAL_TESTING
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PloneSandboxLayer
@@ -15,4 +16,5 @@ class CollectionJsonLayer(PloneSandboxLayer):
 COLLECTION_JSON_FIXTURE = CollectionJsonLayer()
 
 COLLECTION_JSON_LAYER = IntegrationTesting(
-    bases=(COLLECTION_JSON_FIXTURE,), name="pmr2.json.collection:integration",)
+    bases=(COLLECTION_JSON_FIXTURE, FUNCTIONAL_TESTING,),
+    name="pmr2.json.collection:integration",)
