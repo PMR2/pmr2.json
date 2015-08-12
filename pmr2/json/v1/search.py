@@ -1,7 +1,7 @@
 from Products.CMFCore.utils import getToolByName
 
-from pmr2.json.collection.mixin import JsonCollectionPage
-from pmr2.json.mixin import extractRequestObj
+from pmr2.json.collection.mixin import JsonCollectionCatalogBase
+from pmr2.json.collection.core import request_template_to_dict
 
 
 def index_values(catalog, name, **kw):
@@ -10,7 +10,7 @@ def index_values(catalog, name, **kw):
     } for value in catalog._catalog.getIndex(name).uniqueValues()]
 
 
-class JsonSearchPage(JsonCollectionPage):
+class JsonSearchPage(JsonCollectionCatalogBase):
 
     valid_fields = (
         'SearchableText', 'Title', 'Description', 'Subject', 'portal_type',
@@ -33,19 +33,14 @@ class JsonSearchPage(JsonCollectionPage):
             }
             f_options = self.choice_fields.get(field_name)
             if f_options:
-                item['options'] = f_options(self.catalog, field_name)
+                item['options'] = f_options(self._catalog, field_name)
             data.append(item)
         return data
 
     def update(self):
-        self.catalog = getToolByName(self.context, 'portal_catalog')
-
         super(JsonSearchPage, self).update()
-
-        query = extractRequestObj(self.request)
-        if not query:
-            # process this to collection items
-            # self.results = self.catalog(**query)
-            self.results = []
-
         self._jc_template = self._build_template()
+
+    def make_query(self):
+        return request_template_to_dict(self.request)
+

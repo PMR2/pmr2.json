@@ -1,5 +1,6 @@
 import unittest
 import json
+from cStringIO import StringIO
 
 import zope.component
 from Products.CMFCore.utils import getToolByName
@@ -108,6 +109,76 @@ class SearchTestCase(unittest.TestCase):
                 },
             ],
         }})
+
+    def test_query(self):
+        portal = self.portal
+
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+        login(portal, TEST_USER_NAME)
+        portal.invokeFactory('News Item', 'testnews', title=u'Test News',
+            subject=['Portal News'])
+        portal.invokeFactory('Document', 'testpage', title=u'Test Page',
+            text='This is a simple page')
+        workflowTool = getToolByName(portal, 'portal_workflow')
+        workflowTool.setDefaultChain("simple_publication_workflow")
+        workflowTool.doActionFor(portal.testpage, 'publish')
+
+        setRoles(portal, TEST_USER_ID, ['Member'])
+
+        f = search.JsonSearchPage(self.portal, self.request)
+        results = json.loads(f())
+        self.assertEqual(results,  {'collection': {
+            'version': '1.0',
+            'template': [
+                {
+                    u'name': u'SearchableText',
+                    u'prompt': u'SearchableText',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Title',
+                    u'prompt': u'Title',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Description',
+                    u'prompt': u'Description',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Subject',
+                    u'prompt': u'Subject',
+                    u'value': u'',
+                    u'options': [{u'value': u'Portal News'}],
+                },
+                {
+                    u'name': u'portal_type',
+                    u'prompt': u'portal_type',
+                    u'value': u'',
+                    u'options': [
+                        {u'value': u'Document'},
+                        {u'value': u'News Item'}
+                    ],
+                },
+            ],
+        }})
+
+        request = TestRequest()
+        request.stdin = StringIO(json.dumps({'template': {
+            'data': [
+                {
+                    'name': 'SearchableText',
+                    'value': 'simple',
+                }
+            ]
+        }}))
+        f = search.JsonSearchPage(self.portal, request)
+        results = json.loads(f())
+        self.assertEqual(results['collection']['links'], [{
+            'href': u'http://nohost/plone/testpage',
+            'prompt': u'Test Page',
+            'rel': u'bookmark'
+        }])
 
 
 def test_suite():
