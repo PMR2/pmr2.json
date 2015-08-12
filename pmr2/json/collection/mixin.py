@@ -106,24 +106,13 @@ class JsonCollectionPage(JsonPage):
         return json_collection_view_render(self)
 
 
-class JsonCollectionCatalogPage(JsonCollectionPage):
+class JsonCollectionCatalogBase(JsonCollectionPage):
     """
-    Basic presentation of a catalog listing as links with the bookmark
-    relationship.  This is the most basic and generic form, it makes no
-    guarantees as to the linked data will be in the same Collection+JSON
-    format.
+    Provide a reusable base class for handling the catalog.
     """
-
-    portal_type = None
 
     def make_query(self):
-        return {
-            'portal_type': self.portal_type,
-            'path': [
-                u'/'.join(self.context.getPhysicalPath()),
-            ],
-            'sort_on': 'sortable_title',
-        }
+        raise NotImplementedError
 
     def catalog(self, query):
         return self._catalog(**query)
@@ -144,8 +133,29 @@ class JsonCollectionCatalogPage(JsonCollectionPage):
     def update(self):
         self._catalog = getToolByName(self.context, 'portal_catalog')
         query = self.make_query()
-        results = self.catalog(query)
-        self.update_jc(results)
+        if query:
+            results = self.catalog(query)
+            self.update_jc(results)
+
+
+class JsonCollectionCatalogPage(JsonCollectionCatalogBase):
+    """
+    Basic presentation of a catalog listing as links with the bookmark
+    relationship.  This is the most basic and generic form, it makes no
+    guarantees as to the linked data will be in the same Collection+JSON
+    format.
+    """
+
+    portal_type = None
+
+    def make_query(self):
+        return {
+            'portal_type': self.portal_type,
+            'path': [
+                u'/'.join(self.context.getPhysicalPath()),
+            ],
+            'sort_on': 'sortable_title',
+        }
 
 
 class JsonCollectionItemCatalogPage(JsonCollectionCatalogPage):
