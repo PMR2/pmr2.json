@@ -204,6 +204,52 @@ class SearchTestCase(unittest.TestCase):
             json.loads(self.testbrowser.contents)['collection']['links'],
             links)
 
+    def test_input_error(self):
+        request = TestRequest()
+        request.stdin = StringIO(json.dumps({'template': {
+            'data': [
+                {
+                    'name': 'SearchableText',
+                    'value': None,
+                }
+            ]
+        }}))
+        f = search.JsonSearchPage(self.portal, request)
+        results = json.loads(f())
+        self.assertEqual(results,  {'collection': {
+            'version': '1.0',
+            'error': 'input error',
+            'template': [
+                {
+                    u'name': u'SearchableText',
+                    u'prompt': u'SearchableText',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Title',
+                    u'prompt': u'Title',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Description',
+                    u'prompt': u'Description',
+                    u'value': u'',
+                },
+                {
+                    u'name': u'Subject',
+                    u'prompt': u'Subject',
+                    u'value': u'',
+                    u'options': [],
+                },
+                {
+                    u'name': u'portal_type',
+                    u'prompt': u'portal_type',
+                    u'value': u'',
+                    u'options': [],
+                },
+            ],
+        }})
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -134,8 +134,12 @@ class JsonCollectionCatalogBase(JsonCollectionPage):
         self._catalog = getToolByName(self.context, 'portal_catalog')
         query = self.make_query()
         if query:
-            results = self.catalog(query)
-            self.update_jc(results)
+            try:
+                results = self.catalog(query)
+            except:
+                self._jc_error = 'input error'
+            else:
+                self.update_jc(results)
 
 
 class JsonCollectionCatalogPage(JsonCollectionCatalogBase):

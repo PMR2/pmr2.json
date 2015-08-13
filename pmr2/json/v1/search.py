@@ -43,4 +43,3 @@ class JsonSearchPage(JsonCollectionCatalogBase):
 
     def make_query(self):
         return request_template_to_dict(self.request)
-
