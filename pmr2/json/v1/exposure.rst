@@ -217,6 +217,18 @@ The exposure files can be accessed like so::
     ... }]
     True
 
+Data section should look like so, with the value to the file_type be a
+valid URL to the type::
+
+    >>> result['collection']['items'][0]['data'] == [{
+    ...     u'prompt': u'File type for this exposure',
+    ...     u'name': u'file_type',
+    ...     u'value': u'http://nohost/plone/docgen_type'
+    ... }, {
+    ...     u'prompt': u'Title', u'name': u'title', u'value': u'file',
+    ... }]
+    True
+
 As for what those notes will return, this depend on the implementation
 of the annotation views.  Not all will have the appropriate web service
 views implemented.

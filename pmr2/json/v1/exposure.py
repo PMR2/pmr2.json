@@ -2,6 +2,7 @@ import json
 
 import zope.component
 from zope.schema.interfaces import IVocabulary
+from zope.schema.interfaces import IVocabularyFactory
 
 import z3c.form.interfaces
 from z3c.form import button, field
@@ -93,6 +94,17 @@ class JsonExposureFilePage(JsonCollectionPage):
         exposure, workspace, path = helper.source()
         keys = ('source_uri', 'file_type', 'views',)
 
+        file_type = self.context.file_type
+
+        vocab_factory = zope.component.queryUtility(IVocabularyFactory,
+            name='pmr2.vocab.eftype_uri')
+        if vocab_factory:
+            try:
+                term = vocab_factory(self.context).getTerm(file_type)
+                file_type = term.token
+            except:
+                pass
+
         source_uri = '%s/%s/%s/%s' % (workspace.absolute_url(),
             'rawfile', exposure.commit_id, path)
 
@@ -102,7 +114,7 @@ class JsonExposureFilePage(JsonCollectionPage):
                 # TODO automate this via interface for simple case?
                 {
                     'name': 'file_type',
-                    'value': self.context.file_type,
+                    'value': file_type,
                     'prompt': 'File type for this exposure',
                 },
                 {
