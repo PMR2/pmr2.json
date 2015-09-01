@@ -229,6 +229,35 @@ valid URL to the type::
     ... }]
     True
 
+Navigating at that URL should return a proper representation::
+
+    >>> tb.open(result['collection']['items'][0]['data'][0]['value'])
+    >>> filetype = json.loads(tb.contents)
+    >>> filetype['collection'] == {
+    ...     u'items': [{
+    ...         u'data': [{
+    ...             u'prompt': u'Title', u'name': u'title',
+    ...             u'value': u'Docgen Type', u'description': u''
+    ...         }, {
+    ...             u'prompt': u'Views', u'name': u'views',
+    ...             u'value': [u'docgen', u'filename_note'],
+    ...             u'description': u'The list of views to be created.'
+    ...         }, {
+    ...             u'prompt': u'Select View', u'name': u'select_view',
+    ...             u'value': None,
+    ...             u'description': u'If defined, select this view if the '
+    ...                 'generation is successful.'
+    ...         }, {
+    ...             u'prompt': u'Tags', u'name': u'tags', u'value': [],
+    ...             u'description':
+    ...                 u'List of tags to be assigned to this file.'
+    ...         }]
+    ...     }],
+    ...     u'href': u'http://nohost/plone/docgen_type/eftype_view',
+    ...     u'version': u'1.0'
+    ... }
+    True
+
 As for what those notes will return, this depend on the implementation
 of the annotation views.  Not all will have the appropriate web service
 views implemented.

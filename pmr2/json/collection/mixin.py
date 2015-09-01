@@ -85,6 +85,29 @@ class JsonCollectionFormMixin(Form):
             return super(JsonCollectionFormMixin, self).__call__()
 
 
+class JsonCollectionViewFormMixin(JsonCollectionFormMixin):
+    """
+    Mixin for z3c.form ViewForms that renders JSON+Collection.
+    """
+
+    def update(self):
+        # one level above as we don't need the template
+        super(JsonCollectionFormMixin, self).update()
+        if self.ignoreContext:
+            # Can't extract any meaningful thing so we quit.
+            # XXX error message?
+            return
+
+        self._jc_items = [{
+            'data': [{
+                'name': key,
+                'prompt': self.fields[key].field.title,
+                'description': self.fields[key].field.description,
+                'value': self.fields[key].field.get(self.context),
+            } for key in self.fields.keys()]
+        }]
+
+
 class JsonCollectionAddFormMixin(JsonCollectionFormMixin):
 
     def render(self):

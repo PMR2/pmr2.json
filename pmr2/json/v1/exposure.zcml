@@ -6,6 +6,16 @@
     
   <include package="Products.CMFCore" file="permissions.zcml" />
 
+  <!-- ExposureFileType -->
+
+  <browser:page
+      for="pmr2.app.exposure.interfaces.IExposureFileType"
+      name="eftype_view"
+      class=".exposure.JsonExposureFileTypeView"
+      layer=".interfaces.IJsonLayer"
+      permission="zope2.View"
+      />
+
   <!-- ExposureContainer -->
 
   <browser:page

@@ -15,11 +15,12 @@ from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.interfaces import IExposureWizard
 from pmr2.app.exposure.browser import util
 from pmr2.app.exposure.browser import wizard
+from pmr2.app.exposure.browser.browser import ExposureFileTypeDisplayForm
 
 from pmr2.json.collection.mixin import JsonCollectionCatalogPage
 from pmr2.json.collection.mixin import JsonCollectionFormMixin
+from pmr2.json.collection.mixin import JsonCollectionViewFormMixin
 from pmr2.json.collection.mixin import JsonCollectionPage
-
 
 class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
 
@@ -54,6 +55,11 @@ class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
                 'errors': [],
             }
         return result
+
+
+class JsonExposureFileTypeView(JsonCollectionViewFormMixin,
+        ExposureFileTypeDisplayForm):
+    pass
 
 
 class JsonExposureContainerList(JsonCollectionCatalogPage):
