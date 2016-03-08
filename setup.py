@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.3'
+version = '0.5'
 
 setup(name='pmr2.json',
       version=version,
