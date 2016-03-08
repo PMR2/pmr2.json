@@ -1,6 +1,16 @@
 Changelog
 =========
 
+0.5 - 2016-03-08
+----------------
+
+* The definition of the .0 and .1 is now defined as encoding format.
+* The .1 format is effectively Collection+JSON.
+* Version now distinct by version parameter to the mimetype string.
+* This also means that the .1 family will not fall back to the .0
+  family of the API.
+* Various other minor fixes.
+
 0.4 - 2015-03-19
 ----------------
 
