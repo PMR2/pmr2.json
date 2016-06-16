@@ -43,6 +43,10 @@ class JsonWorkspacePage(JsonCollectionPage, WorkspacePage):
                     'value': self.context.id,
                 },
                 {
+                    'name': 'title',
+                    'value': self.context.title,
+                },
+                {
                     'name': 'owner',
                     'value': owner,
                 },

@@ -111,9 +111,9 @@ redirected to the created resource.  Check that the resource loads.::
     u'id'
     >>> result['collection']['items'][0]['data'][0]['value']
     u'test'
-    >>> result['collection']['items'][0]['data'][2]['name']
+    >>> result['collection']['items'][0]['data'][3]['name']
     u'description'
-    >>> result['collection']['items'][0]['data'][2]['value']
+    >>> result['collection']['items'][0]['data'][3]['value']
     u'Test Dummy'
 
 Now see if it is possible to edit the workspace.::
@@ -141,7 +141,7 @@ Now see if it is possible to edit the workspace.::
     u'id'
     >>> result['collection']['items'][0]['data'][0]['value']
     u'test'
-    >>> result['collection']['items'][0]['data'][2]['name']
+    >>> result['collection']['items'][0]['data'][3]['name']
     u'description'
-    >>> result['collection']['items'][0]['data'][2]['value']
+    >>> result['collection']['items'][0]['data'][3]['value']
     u'Edited'
