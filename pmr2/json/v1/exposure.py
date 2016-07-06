@@ -11,6 +11,7 @@ from Products.CMFCore.utils import getToolByName
 
 from pmr2.z3cform import form
 
+from pmr2.app.annotation.interfaces import IExposureNoteTarget
 from pmr2.app.exposure.interfaces import IExposureSourceAdapter
 from pmr2.app.exposure.interfaces import IExposureWizard
 from pmr2.app.exposure.browser import util
@@ -21,6 +22,18 @@ from pmr2.json.collection.mixin import JsonCollectionCatalogPage
 from pmr2.json.collection.mixin import JsonCollectionFormMixin
 from pmr2.json.collection.mixin import JsonCollectionViewFormMixin
 from pmr2.json.collection.mixin import JsonCollectionPage
+
+
+# While the main version
+# from pmr2.app.annotation.factory import default_note_url
+# will do, there may be need to customize it here, especially for the
+# removal of the `@@`.
+
+def default_note_url(context):
+    def default_url(view):
+        return '%s/%s' % (context.absolute_url(), view)
+    return default_url
+
 
 class JsonExposureWizardForm(JsonCollectionFormMixin, form.EditForm):
 
@@ -142,7 +155,10 @@ class JsonExposureFilePage(JsonCollectionPage):
 
         self._jc_links = [
             {
-                'href': '/'.join([self.context.absolute_url(), v]),
+                'href': zope.component.queryAdapter(
+                    self.context, IExposureNoteTarget, name=v,
+                    default=default_note_url(self.context))(v),
+
                 'rel': 'section',
                 'prompt': vocab.getTerm(v).title,
             } for v in self.context.views

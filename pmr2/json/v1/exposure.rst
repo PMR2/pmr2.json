@@ -205,14 +205,13 @@ The exposure files can be accessed like so::
     >>> result = json.loads(tb.contents)
     >>> result['collection']['links'] == [
     ... {
-    ...     "href": "http://nohost/plone/exposure/3/dir1/nested/file/docgen", 
-    ...     "prompt": "Documentation", 
+    ...     "href": "http://nohost/plone/exposure/3/dir1/nested/file/docgen",
+    ...     "prompt": "Documentation",
     ...     "rel": "section"
-    ... }, 
+    ... },
     ... {
-    ...     "href":
-    ...       "http://nohost/plone/exposure/3/dir1/nested/file/filename_note", 
-    ...     "prompt": None, 
+    ...     "href": "dir1/nested/file",
+    ...     "prompt": None,
     ...     "rel": "section"
     ... }]
     True
@@ -272,9 +271,12 @@ thus there will be no JSON view for them::
     ValueError: No JSON object could be decoded
 
 Whereas views that have json views defined for them will behave as
-expected::
+expected, though we have to manually resolve the one for the one for
+the ``filename_note`` as it was overridden to be relative for another
+demonstration elsewhere::
 
-    >>> tb.open(result['collection']['links'][1]['href'])
+    >>> href = "http://nohost/plone/exposure/3/dir1/nested/file/filename_note"
+    >>> tb.open(href)
     >>> json.loads(tb.contents)
     {u'collection': {u'items':
     [{u'name': u'filename', u'value': u'dir1/nested/file'}],
