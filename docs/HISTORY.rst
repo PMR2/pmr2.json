@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.6 - 2016-07-06
+----------------
+
+* Have the workspace view return a title field.
+* The links provided by exposure files match the ones provided by the
+  exposure file views available portlet.
+
 0.5 - 2016-03-08
 ----------------
 
