@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.7 - 2017-01-06
+----------------
+
+* Server-side injection of CSRF token to authenticate plone.protect; not
+  feeding the same token down the webservice forms given that if the
+  attacker can make the POST request, they can make the same GET request
+  to get those token anyway; this is why CORS was created so browsers
+  will block these requests unless permitted by the server.
+
 0.6 - 2016-07-06
 ----------------
 
