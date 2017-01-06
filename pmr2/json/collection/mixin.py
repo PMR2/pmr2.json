@@ -5,6 +5,7 @@ from zope.interface import implementer
 from z3c.form.form import Form
 from z3c.form.form import BaseForm
 
+from pmr2.json.mixin import _disable_csrf_for_webservices
 from pmr2.json.mixin import JsonPage
 from pmr2.json.interfaces import ISimpleJsonLayer1
 from pmr2.json.collection.core import formfields_to_collection_template
@@ -40,15 +41,9 @@ class JsonCollectionFormMixin(Form):
         Convert JSON input into standard request.
         """
 
-        # XXX at some point we need to consider the security and how
-        # this might be vulnerable to XSS (for browsers that do not have
-        # origin policy support).
-        self.disableAuthenticator = True
-
+        _disable_csrf_for_webservices(self)
         update_json_collection_form(self)
-
         super(JsonCollectionFormMixin, self).update()
-
         self._jc_template = formfields_to_collection_template(self)
 
         return None

@@ -3,6 +3,11 @@ import json
 import zope.interface
 from z3c.form.form import BaseForm
 
+try:
+    from plone.protect import createToken
+except ImportError:
+    createToken = None
+
 from Products.CMFCore.utils import getToolByName
 
 from pmr2.z3cform.page import SimplePage
@@ -10,6 +15,22 @@ from pmr2.json.interfaces import ISimpleJsonLayer
 from pmr2.json.utils import extractRequestObj
 from pmr2.json.utils import objToRequest
 from pmr2.json.layer import set_content_type
+
+
+def _disable_csrf_for_webservices(form):
+    """
+    This is safe if and only if this view uses specific headers that
+    must be done via JavaScript XHR _and_ that the browser supports
+    CORS and the host for this instance does not allow other domains
+    from poking at this.
+    """
+
+    form.disableAuthenticator = True
+    if callable(createToken) and '_authenticator' not in form.request.form:
+        try:
+            form.request.form['_authenticator'] = createToken()
+        except Exception:
+            pass
 
 
 class JsonPage(SimplePage):
@@ -69,11 +90,7 @@ class SimpleJsonFormMixin(BaseForm):
         Convert JSON input into standard request.
         """
 
-        # XXX at some point we need to consider the security and how
-        # this might be vulnerable to XSS (for browsers that do not have
-        # origin policy support).
-        self.disableAuthenticator = True
-
+        _disable_csrf_for_webservices(self)
         updateJsonForm(self)
         super(SimpleJsonFormMixin, self).update()
         self.json_faa = extractFieldsAndActions(self)
