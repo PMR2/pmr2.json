@@ -254,7 +254,7 @@ class CollectionsFormConversionTestCase(unittest.TestCase):
                     "value": 1
                 }
             ]
-        }}'''))
+        }}'''), method='POST')
 
         f = form.ItemForm(self.item, request)
         f.update()
