@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.7.1 - 2017-01-09
+------------------
+
+* Correct test failures after Products.PloneHotfix20160830
+
 0.7 - 2017-01-06
 ----------------
 

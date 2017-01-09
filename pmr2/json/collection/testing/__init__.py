@@ -13,3 +13,7 @@ class TestRequest(testing.TestRequest):
         self.stdin = kw.pop('stdin', StringIO())
         super(testing.TestRequest, self).__init__(*a, **kw)
         self.method = kw.pop('method', self.method)
+
+    @property
+    def REQUEST_METHOD(self):
+        return self.method
