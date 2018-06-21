@@ -203,6 +203,9 @@ results returned in a flat list::
     ...     u'data': [{
     ...         u'prompt': u'Title', u'name': u'title',
     ...         u'value': u'',
+    ...     }, {
+    ...         u'prompt': u'Changeset', u'name': u'commit_id',
+    ...         u'value': u'3',
     ...     }]
     ... }]
     True
@@ -233,6 +236,20 @@ valid URL to the type::
     ...     u'value': u'http://nohost/plone/docgen_type'
     ... }, {
     ...     u'prompt': u'Title', u'name': u'title', u'value': u'file',
+    ... }, {
+    ...     u'prompt': u'Changeset', u'name': u'commit_id', u'value': u'3',
+    ... }]
+    True
+
+Also check that the links are done both to the file and the workspace::
+
+    >>> result['collection']['items'][0]['links'] == [{
+    ...     u'href': u'http://nohost/plone/workspace/test/rawfile/3/'
+    ...               'dir1/nested/file',
+    ...     u'prompt': u'Source File', u'rel': u'via',
+    ... }, {
+    ...     u'href': u'http://nohost/plone/workspace/test',
+    ...     u'prompt': u'Workspace URL', u'rel': u'via',
     ... }]
     True
 

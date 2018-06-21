@@ -98,6 +98,16 @@ class JsonExposurePage(JsonCollectionCatalogPage):
             'href': workspace.absolute_url(),
             'prompt': 'Workspace URL',
         })
+        # since the parent class adds the context to the first item,
+        # extend it with the additional fields.
+        # TODO it will be better to establish the way to acquire the
+        # required attributes by some attribute on the parent view class
+        self._jc_items[0]['data'].append({
+            'name': 'commit_id',
+            'value': self.context.commit_id,
+            'prompt': 'Changeset',
+        })
+
 
 class JsonExposureFilePage(JsonCollectionPage):
 
@@ -141,12 +151,21 @@ class JsonExposureFilePage(JsonCollectionPage):
                     'value': self.context.title,
                     'prompt': 'Title',
                 },
+                {
+                    'name': 'commit_id',
+                    'value': exposure.commit_id,
+                    'prompt': 'Changeset',
+                }
             ],
             # it's for this thing...
             'links': [{
                 'rel': 'via',
                 'href': source_uri,
                 'prompt': 'Source File'
+            }, {
+                'rel': 'via',
+                'href': workspace.absolute_url(),
+                'prompt': 'Workspace URL',
             }]
         }]
 
