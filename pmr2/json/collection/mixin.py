@@ -148,6 +148,16 @@ class JsonCollectionCatalogBase(JsonCollectionPage):
             } for i in results
         ]
 
+        self._jc_items = [{
+            'href': '%s/%s' % (self.context.absolute_url(), self.__name__),
+            'data': [{
+                'name': 'title',
+                'value': self.context.title,
+                'prompt': 'Title',
+            }],
+        }]
+
+
     def update(self):
         self._catalog = getToolByName(self.context, 'portal_catalog')
         query = self.make_query()

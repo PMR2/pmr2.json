@@ -198,6 +198,14 @@ results returned in a flat list::
     ... {u'href': u'http://nohost/plone/workspace/test',
     ...  u'prompt': u'Workspace URL', u'rel': u'via'}]
     True
+    >>> result['collection']['items'] == [{
+    ...     u'href': 'http://nohost/plone/exposure/3/exposure_info',
+    ...     u'data': [{
+    ...         u'prompt': u'Title', u'name': u'title',
+    ...         u'value': u'',
+    ...     }]
+    ... }]
+    True
 
 The exposure files can be accessed like so::
 
