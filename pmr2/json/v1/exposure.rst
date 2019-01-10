@@ -198,6 +198,9 @@ results returned in a flat list::
     ... {u'href': u'http://nohost/plone/workspace/test',
     ...  u'prompt': u'Workspace URL', u'rel': u'via'}]
     True
+
+The first item will always reference the current object::
+
     >>> result['collection']['items'] == [{
     ...     u'href': 'http://nohost/plone/exposure/3/exposure_info',
     ...     u'data': [{
@@ -206,7 +209,7 @@ results returned in a flat list::
     ...     }, {
     ...         u'prompt': u'Changeset', u'name': u'commit_id',
     ...         u'value': u'3',
-    ...     }]
+    ...     }],
     ... }]
     True
 
