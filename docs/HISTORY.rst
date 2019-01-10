@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.0 - 2019-01-10
+------------------
+
+* Return the key fields for the exposure object.
+
 0.7.1 - 2017-01-09
 ------------------
 
