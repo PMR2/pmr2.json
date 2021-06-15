@@ -24,13 +24,42 @@ class JsonWorkspaceContainerList(JsonListingBasePage):
 
 class JsonWorkspacePage(JsonCollectionPage, WorkspacePage):
 
+    @property
+    def exposures(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        query = {}
+        query['portal_type'] = 'Exposure'
+        query['review_state'] = 'published'
+        query['pmr2_exposure_workspace'] = [
+            u'/'.join(self.context.getPhysicalPath()),
+        ]
+        query['sort_on'] = 'modified'
+        query['sort_order'] = 'reverse'
+        results = catalog(**query)
+        return results
+
+    @property
+    def latest_exposure(self):
+        exposures = self.exposures
+        if exposures:
+            return exposures[0]
+
     def update(self):
+        links = []
         context_owner = self.context.getOwner()
         fullname = context_owner.getProperty('fullname', context_owner.getId())
         email = context_owner.getProperty('email', None)
         owner = fullname
         if email:
             owner += ' <%s>' % email
+
+        latest_exposure = self.latest_exposure
+        if latest_exposure:
+            links.append({
+                'rel': 'bookmark',
+                'href': self.latest_exposure.getURL(),
+                'prompt': 'Latest Exposure',
+            })
 
         # TODO use the interface populating method if/when that is
         # implemented.
@@ -60,7 +89,7 @@ class JsonWorkspacePage(JsonCollectionPage, WorkspacePage):
                 },
             ],
             # TODO links to revision and exposures.
-            'links': [],
+            'links': links,
         }]
 
 

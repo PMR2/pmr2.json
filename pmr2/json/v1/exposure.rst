@@ -310,3 +310,26 @@ demonstration elsewhere::
     [{u'name': u'filename', u'value': u'dir1/nested/file'}],
     u'href': u'http://nohost/plone/exposure/3/dir1/nested/file/filename_note',
     u'version': u'1.0'}}
+
+The latest exposure should be linked from the workspace::
+
+    >>> href = "http://nohost/plone/workspace/test"
+    >>> tb.open(href)
+    >>> json.loads(tb.contents)['collection']['items'][0]['links']
+    []
+
+Well, nothing yet, given the exposure have not been published yet.
+Once that is done however::
+
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> from Products.PloneTestCase.setup import portal_owner
+    >>> self.setRoles(('Manager',))
+    >>> wft = getToolByName(self.portal, 'portal_workflow')
+    >>> wft.doActionFor(self.portal.workspace.test, 'publish')
+    >>> wft.doActionFor(self.portal.exposure['3'], 'publish')
+    >>> self.setRoles(('Member', 'Authenticated',))
+    >>> href = "http://nohost/plone/workspace/test"
+    >>> tb.open(href)
+    >>> links = json.loads(tb.contents)['collection']['items'][0]['links']
+    >>> print(links[0]['href'])
+    http://nohost/plone/exposure/3
