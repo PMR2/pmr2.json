@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.1 - 2020-06-15
+------------------
+
+* Link to latest exposure from workspace, if available.
+
 0.8.0 - 2019-01-10
 ------------------
 
